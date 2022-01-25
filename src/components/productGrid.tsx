@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import Book from "./book";
 import Moralis from 'moralis';
+import { useEffect, useState } from "react";
+import Book from "./book";
 
 const products = [
   {
@@ -18,7 +18,7 @@ const products = [
 
 const ProductGrid =  () => {
 
-  const [nfts, setNfts] = useState<any>();
+  const [nfts, setNfts] = useState<any>([]);
 
   const getBookMetadata = async () => {
     Moralis.start({
@@ -33,7 +33,7 @@ const ProductGrid =  () => {
     };
   
     const NFTs = await Moralis.Web3API.token.getAllTokenIds(options);
-    setNfts(NFTs);
+    setNfts(NFTs.result);
 
     console.log(NFTs);
   };
