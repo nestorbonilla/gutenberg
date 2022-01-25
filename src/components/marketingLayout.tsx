@@ -1,7 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import Moralis from "moralis";
 
 const navigation = [
   { name: "Product", href: "#" },
@@ -11,8 +12,26 @@ const navigation = [
 ];
 
 const MarketingLayout = ({ children }: any) => {
+  const [wallet, setWallet] = useState(false);
+
+  const connectWallet = async () => {
+    let user: any = Moralis.User.current();
+    if (!user) {
+      user = await Moralis.authenticate({
+        signingMessage: "Log in using Moralis",
+      })
+        .then(function (user) {
+          console.log("logged in user:", user);
+          console.log(user.get("ethAddress"));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  };
+
   return (
-    <div className="relative bg-gray-50 overflow-hidden">
+    <div className="relative bg-gray-50 overflow-hidden min-h-screen">
       <div
         className="hidden sm:block sm:absolute sm:inset-y-0 sm:h-full sm:w-full"
         aria-hidden="true"
@@ -124,10 +143,10 @@ const MarketingLayout = ({ children }: any) => {
               <div className="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">
                 <span className="inline-flex rounded-md shadow">
                   <a
-                    href="#"
+                    onClick={connectWallet}
                     className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
                   >
-                    Log in
+                    Connect Wallet
                   </a>
                 </span>
               </div>
@@ -175,10 +194,10 @@ const MarketingLayout = ({ children }: any) => {
                   ))}
                 </div>
                 <a
-                  href="#"
+                  onClick={connectWallet}
                   className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100"
                 >
-                  Log in
+                  Connect Wallet
                 </a>
               </div>
             </Popover.Panel>
