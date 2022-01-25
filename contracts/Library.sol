@@ -99,7 +99,12 @@ contract Library is ReentrancyGuard {
             "Please submit the asking price in order to complete the purchase"
         );
 
-        idToBook[bookId].seller.transfer(msg.value * (1 - royaltyFee / 100));
+        if (price > 0) {
+            idToBook[bookId].seller.transfer(
+                msg.value * (1 - royaltyFee / 100)
+            );
+        }
+
         IERC1155(nftContract).safeTransferFrom(
             address(this),
             msg.sender,
