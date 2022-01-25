@@ -1,7 +1,7 @@
-import { book } from "../types/mockMetadata";
+import { nft_book } from "../types/mockMetadata";
 
 type Props = {
-  book: book; 
+  book: nft_book; 
 }
 
 const Book = ({ book }: Props) => {

@@ -3,8 +3,8 @@ import { StarIcon } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
 import { CurrencyDollarIcon, GlobeIcon } from "@heroicons/react/outline";
 import MarketingLayout from "../../components/marketingLayout";
-import { metadata } from "../../types/mockMetadata";
-import { book } from "../../types/mockMetadata";
+import { mockBooks } from "../../types/mockMetadata";
+import { nft_book } from "../../types/mockMetadata";
 // const book = {
 //   name: "Basic Tee",
 //   price: "$35",
@@ -85,7 +85,7 @@ function classNames(...classes: any) {
 export default function Example() {
   //   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   //     const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
-  const [mintBook, setMintBook] = useState<book>(metadata[0]);
+  const [mintBook, setMintBook] = useState<nft_book>(mockBooks[0]);
 
   return (
     <MarketingLayout>

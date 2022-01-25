@@ -1,11 +1,14 @@
-import Moralis from "moralis";
 import { useEffect, useState } from "react";
-import { metadata } from "../types/mockMetadata";
+import Moralis from "moralis";
 import Book from "./book";
+import { nft_book } from "../types/mockMetadata";
 
+type Props = {
+  books: nft_book[]
+}
 
-const ProductGrid = () => {
-  const [nfts, setNfts] = useState<any>(metadata);
+const ProductGrid = ({ books } : Props) => {
+  const [nfts, setNfts] = useState<any>(books);
 
   // const getBookMetadata = async () => {
   //   Moralis.start({

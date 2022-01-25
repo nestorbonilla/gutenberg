@@ -1,4 +1,4 @@
-export type book = {
+export type nft_book = {
   // first 3 properties are standard: https://eips.ethereum.org/EIPS/eip-721
   //  id: string
   id: string;
@@ -12,7 +12,7 @@ export type book = {
   price: string;
 };
 
-export const metadata: book[] = [
+export const mockBooks: nft_book[] = [
   {
     name: "Alice's Adventures in Wonderland",
     description:
