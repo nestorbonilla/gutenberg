@@ -1,14 +1,33 @@
 import { nft_book } from "../types/mockMetadata";
 import Link from "next/link";
 
+export enum Action {
+  mintERC721 = "mintER721",
+  buyERC721 = "buyER721",
+  buyERC1155 = "buyERC1155",
+  read = "read",
+}
+
 type Props = {
   book: nft_book;
+  action: Action;
 };
 
-const Book = ({ book }: Props) => {
-  // let meta = book.metadata;
 
-  // console.log(meta);
+const Book = ({ book, action }: Props) => {
+
+  const link = (link: string) => {
+    switch (action) {
+      case Action.mintERC721:
+        return `/mint/${link}`;
+      case Action.buyERC721:
+        return `/buy/${link}`;
+      case Action.buyERC1155:
+        return `/buy/${link}`;
+      case Action.read:
+        return `/read/${link}`;
+    }
+  }
 
   return (
     <div key={book.ipfs_url} className="group relative">
@@ -22,7 +41,7 @@ const Book = ({ book }: Props) => {
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-700">
-            <Link href={`buy/${book.hash}`}>
+            <Link href={link(book.hash)}>
               <a>
                 <span aria-hidden="true" className="absolute inset-0" />
                 {book.name}
