@@ -1,9 +1,10 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { useEffect } from "react";
-import Moralis from "moralis";
+// import { useEffect } from "react";
+// import Moralis from "moralis";
 
 function MyApp({ Component, pageProps }: AppProps) {
+
   // const initMoralis = async () => {
   //   console.log("Init Moralis");
   //   Moralis.start({
