@@ -1,0 +1,17 @@
+{
+    "name": "A Journey to the Center of the Earth",
+    "description": "An adventurous geology professor chances upon a manuscript in which a 16th-century explorer claims to have found a route to the earth's core. Professor Lidenbrock can't resist the opportunity to investigate, and with his nephew Axel, he sets off across Iceland in the company of Hans Bjelke, a native guide. The expedition descends into an extinct volcano toward a sunless sea, where they encounter a subterranean world of luminous rocks, antediluvian forests, and fantastic marine life — a living past that holds the secrets to the origins of human existence.",
+    "image": "https://gateway.pinata.cloud/ipfs/QmNu3fbCYZY73V45A49iG8RDd3uPWuQX4aDTBPTF4FyLuM",
+    "book_url": "https://gateway.pinata.cloud/ipfs/QmSDDkBYVrf5hffQcLB2waCVTKfWeKQG1iBdqKtKQJrp9a",
+    "attributes": [
+        {
+            "trait_type": "author", 
+            "value": "Jules Verne"
+        },
+        {
+            "display_type": "date", 
+            "trait_type": "published", 
+            "value": -3316619038
+        }
+    ]
+}

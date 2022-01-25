@@ -1,11 +1,13 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.2;
+// SPDX-License-Identifier: MIT OR Apache-2.0
+pragma solidity ^0.8.3;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract GutenbergCollection is ERC1155, Ownable {
+import "hardhat/console.sol";
+
+contract GenesisCollection is ERC1155, Ownable {
     constructor(
         string memory _name,
         string memory _symbol,
@@ -26,7 +28,7 @@ contract GutenbergCollection is ERC1155, Ownable {
         _mint(msg.sender, tokenCount, amount, "");
     }
 
-    //"https://gutenberg.com/api/book/{id}.json"
+    //"https://game.example/api/item/{id}.json"
     function uri(uint256 _tokenId)
         public
         view

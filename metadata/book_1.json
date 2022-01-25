@@ -1,0 +1,17 @@
+{
+    "name": "Alice's Adventures in Wonderland",
+    "description": "I can't explain myself, I'm afraid, sir, said Alice, Because I'm not myself, you see. When Alice sees a white rabbit take a watch out of its waistcoat pocket she decides to follow it, and a sequence of most unusual events is set in motion.",
+    "image": "https://gateway.pinata.cloud/ipfs/QmY3Vz57uUXfwJuD5LeaMHYxouDf3LuQG93ZofzsrLCtws",
+    "book_url": "https://gateway.pinata.cloud/ipfs/QmVjV5n17czTogQf29NKVFqtUedyQmN4v3r8M4G272t9kW",
+    "attributes": [
+        {
+            "trait_type": "author", 
+            "value": "Lewis Carroll"
+        },
+        {
+            "display_type": "date", 
+            "trait_type": "published", 
+            "value": -3093015838
+        }
+    ]
+}

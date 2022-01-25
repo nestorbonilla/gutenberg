@@ -1,0 +1,17 @@
+{
+    "name": "Erewhon",
+    "description": "An explorer discovers a utopian society with unconventional views on crime, illness, and religion. Erewhon, by Samuel Butler, is loosely inspired by his personal experience in New Zealand where he worked as a sheep farmer. The novel is a brilliant satire of Victorian society as a rigid and failing institution.",
+    "image": "https://gateway.pinata.cloud/ipfs/QmV63XwbumCwQ9fNpY9rQh1qYvGhXbSjkpLvTKodyQkJDZ",
+    "book_url": "https://gateway.pinata.cloud/ipfs/QmdXhfHnEAhvZQhn5ix5PVARx9zBpZWy1s4PhDDowrAfBv",
+    "attributes": [
+        {
+            "trait_type": "author", 
+            "value": "Samuel Butler"
+        },
+        {
+            "display_type": "date", 
+            "trait_type": "published", 
+            "value": -3092583838
+        }
+    ]
+}

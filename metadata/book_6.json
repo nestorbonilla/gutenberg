@@ -1,0 +1,17 @@
+{
+    "name": "Mr. Spaceship",
+    "description": "A human brain-controlled spacecraft would mean mechanical perfection. This was accomplished, and something unforeseen: a strange entity called... Mr. Spaceship",
+    "image": "https://gateway.pinata.cloud/ipfs/QmbWUmVYPWeyBhemmyawYmskNpA5gkCyE7DTbMrZPjwkSo",
+    "book_url": "https://gateway.pinata.cloud/ipfs/QmVsz78pWZhV8wgmrPAEdZoDVHxTqChu5zus1eDgK1EVwc",
+    "attributes": [
+        {
+            "trait_type": "author", 
+            "value": "Philip K. Dick"
+        },
+        {
+            "display_type": "date", 
+            "trait_type": "published", 
+            "value": -536439600
+        }
+    ]
+}
