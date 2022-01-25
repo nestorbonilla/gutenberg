@@ -206,7 +206,7 @@ const MarketingLayout = ({ children }: any) => {
           </Transition>
         </Popover>
 
-        <main className="mt-16 mx-auto max-w-7xl px-4 sm:mt-24">
+        <main className="mt-6 mx-auto max-w-7xl px-4 sm:mt-12">
           {children}
         </main>
       </div>
