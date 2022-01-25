@@ -10,6 +10,8 @@ export type nft_book = {
   authors: string[];
   published: string;
   price: string;
+  hash: string;
+  erc1155_parent_hash: string; 
 };
 
 export const mockBooks: nft_book[] = [
@@ -25,6 +27,8 @@ export const mockBooks: nft_book[] = [
     published: "1871-12-27",
     price: "20.00",
     id: "0",
+    hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf",
+    erc1155_parent_hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf"
   },
   {
     name: "Flatland: A Romance of Many Dimensions",
@@ -37,6 +41,8 @@ export const mockBooks: nft_book[] = [
     published: "1884-01-01",
     price: "25.00",
     id: "1",
+    hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf",
+    erc1155_parent_hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf"
   },
   {
     name: "The War of the Worlds",
@@ -49,6 +55,8 @@ export const mockBooks: nft_book[] = [
     published: "1897-01-01",
     price: "15.00",
     id: "2",
+    hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf",
+    erc1155_parent_hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf"
   },
   {
     name: "A Journey to the Center of the Earth",
@@ -62,6 +70,8 @@ export const mockBooks: nft_book[] = [
     published: "1864-11-25",
     price: "17.00",
     id: "3",
+    hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf",
+    erc1155_parent_hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf"
   },
   {
     name: "Frankenstein",
@@ -74,6 +84,8 @@ export const mockBooks: nft_book[] = [
     published: "1818-01-01",
     price: "11.00",
     id: "4",
+    hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf",
+    erc1155_parent_hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf"
   },
   {
     name: "Erewhon",
@@ -86,6 +98,8 @@ export const mockBooks: nft_book[] = [
     published: "1872-01-01",
     price: "20.00",
     id: "5",
+    hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf",
+    erc1155_parent_hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf"
   },
   {
     name: "Mr. Spaceship",
@@ -98,6 +112,8 @@ export const mockBooks: nft_book[] = [
     published: "1953-01-01",
     price: "44.00",
     id: "6",
+    hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf",
+    erc1155_parent_hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf"
   },
   {
     name: "Gulliver's Travels",
@@ -110,5 +126,7 @@ export const mockBooks: nft_book[] = [
     published: "1726-10-28",
     price: "29.00",
     id: "7",
+    hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf",
+    erc1155_parent_hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf"
   },
 ];

@@ -1,8 +1,9 @@
 import { nft_book } from "../types/mockMetadata";
+import Link from "next/link";
 
 type Props = {
-  book: nft_book; 
-}
+  book: nft_book;
+};
 
 const Book = ({ book }: Props) => {
   // let meta = book.metadata;
@@ -21,10 +22,12 @@ const Book = ({ book }: Props) => {
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-700">
-            <a href={book.image}>
-              <span aria-hidden="true" className="absolute inset-0" />
-              {book.name}
-            </a>
+            <Link href={`buy/${book.hash}`}>
+              <a>
+                <span aria-hidden="true" className="absolute inset-0" />
+                {book.name}
+              </a>
+            </Link>
           </h3>
           <p className="mt-1 text-sm text-gray-500">{book.authors}</p>
         </div>
