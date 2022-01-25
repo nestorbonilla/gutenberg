@@ -1,46 +1,33 @@
-import Moralis from 'moralis';
+import Moralis from "moralis";
 import { useEffect, useState } from "react";
+import { metadata } from "../types/mockMetadata";
 import Book from "./book";
 
-const products = [
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-];
 
-const ProductGrid =  () => {
+const ProductGrid = () => {
+  const [nfts, setNfts] = useState<any>(metadata);
 
-  const [nfts, setNfts] = useState<any>([]);
+  // const getBookMetadata = async () => {
+  //   Moralis.start({
+  //     serverUrl: "https://7fqgvttpqukt.usemoralis.com:2053/server",
+  //     appId: "585mUNiZ538xo3FEY7lbXWFZjjFPNxKOvUstjfhc",
+  //   });
 
-  const getBookMetadata = async () => {
-    Moralis.start({
-      serverUrl: "https://7fqgvttpqukt.usemoralis.com:2053/server",
-      appId: "585mUNiZ538xo3FEY7lbXWFZjjFPNxKOvUstjfhc",
-    });
+  //   // BAYC
+  //   const options: any = {
+  //     address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+  //     chain: "eth",
+  //   };
 
-    // BAYC
-    const options: any = {
-      address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
-      chain: "eth",
-    };
-  
-    const NFTs = await Moralis.Web3API.token.getAllTokenIds(options);
-    setNfts(NFTs.result);
+  //   const NFTs = await Moralis.Web3API.token.getAllTokenIds(options);
+  //   setNfts(NFTs.result);
 
-    console.log(NFTs);
-  };
+  //   console.log(NFTs);
+  // };
 
-  useEffect(() => {
-    getBookMetadata();
-  }, []);
-
+  // useEffect(() => {
+  //   getBookMetadata();
+  // }, []);
 
   return (
     <div className="">
