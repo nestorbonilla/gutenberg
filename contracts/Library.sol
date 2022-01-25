@@ -15,8 +15,9 @@ contract Library is ReentrancyGuard {
 
     address payable owner;
 
-    constructor() {
+    constructor(uint256 _royaltyFee) {
         owner = payable(msg.sender);
+        royaltyFee = _royaltyFee;
     }
 
     struct Book {
@@ -31,6 +32,7 @@ contract Library is ReentrancyGuard {
     }
 
     mapping(uint256 => Book) private idToBook;
+    uint256 private royaltyFee;
 
     event BookCreated(
         uint256 indexed bookId,
@@ -93,11 +95,11 @@ contract Library is ReentrancyGuard {
         uint256 price = idToBook[bookId].price;
         uint256 tokenId = idToBook[bookId].tokenId;
         require(
-            msg.value == price,
+            msg.value == price * amount,
             "Please submit the asking price in order to complete the purchase"
         );
 
-        idToBook[bookId].seller.transfer(msg.value);
+        idToBook[bookId].seller.transfer(msg.value * (1 - royaltyFee / 100));
         IERC1155(nftContract).safeTransferFrom(
             address(this),
             msg.sender,

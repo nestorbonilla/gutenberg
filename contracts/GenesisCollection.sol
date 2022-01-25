@@ -11,24 +11,30 @@ contract GenesisCollection is ERC1155, Ownable {
     constructor(
         string memory _name,
         string memory _symbol,
-        string memory _baseUri
+        string memory _baseUri,
+        string memory _ipfsFolderHash,
+        address _libraryAddress
     ) ERC1155(_baseUri) {
         name = _name;
         symbol = _symbol;
         baseUri = _baseUri;
+        ipfsFolderHash = _ipfsFolderHash;
+        libraryAddress = _libraryAddress;
     }
 
     string public name;
     string public symbol;
     uint256 public tokenCount;
     string public baseUri;
+    string public ipfsFolderHash;
+    address public libraryAddress;
 
     function mint(uint256 amount) public onlyOwner {
         tokenCount += 1;
         _mint(msg.sender, tokenCount, amount, "");
+        _setApprovalForAll(msg.sender, libraryAddress, true);
     }
 
-    //"https://game.example/api/item/{id}.json"
     function uri(uint256 _tokenId)
         public
         view
