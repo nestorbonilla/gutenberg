@@ -34,7 +34,7 @@ contract Library is ReentrancyGuard {
     mapping(uint256 => Book) private idToBook;
     uint256 private royaltyFee;
 
-    event BookCreated(
+    event SemiFungibleBookCreated(
         uint256 indexed bookId,
         address indexed nftContract,
         uint256 indexed tokenId,
@@ -45,8 +45,18 @@ contract Library is ReentrancyGuard {
         bool sold
     );
 
-    /* Places a book for sale on the library */
-    function createBook(
+    event NonFungibleBookCreated(
+        uint256 indexed bookId,
+        address indexed nftContract,
+        uint256 indexed tokenId,
+        address seller,
+        address owner,
+        uint256 price,
+        bool sold
+    );
+
+    /* Places a semi fungible book for sale on the library ~ ERC1155*/
+    function createSemiFungibleBook(
         address nftContract,
         uint256 tokenId,
         uint256 price,
@@ -73,11 +83,48 @@ contract Library is ReentrancyGuard {
             ""
         );
 
-        emit BookCreated(
+        emit SemiFungibleBookCreated(
             bookId,
             nftContract,
             tokenId,
             amount,
+            msg.sender,
+            address(0),
+            price,
+            false
+        );
+    }
+
+    /* Places a semi fungible book for sale on the library ~ ERC1155*/
+    function createNonFungibleBook(
+        address nftContract,
+        uint256 tokenId,
+        uint256 price
+    ) public payable nonReentrant {
+        _bookIds.increment();
+        uint256 bookId = _bookIds.current();
+        idToBook[bookId] = Book(
+            bookId,
+            nftContract,
+            tokenId,
+            1,
+            payable(msg.sender),
+            payable(address(0)),
+            price,
+            false
+        );
+
+        IERC721(nftContract).safeTransferFrom(
+            msg.sender,
+            address(this),
+            tokenId,
+            ""
+        );
+
+        emit NonFungibleBookCreated(
+            bookId,
+            nftContract,
+            tokenId,
             msg.sender,
             address(0),
             price,

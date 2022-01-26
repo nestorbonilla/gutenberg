@@ -8,6 +8,13 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "hardhat/console.sol";
 
 contract GenesisCollection is ERC1155, Ownable {
+    string public name;
+    string public symbol;
+    uint256 public tokenCount;
+    string public baseUri;
+    string public ipfsFolderHash;
+    address public libraryAddress;
+
     constructor(
         string memory _name,
         string memory _symbol,
@@ -22,16 +29,9 @@ contract GenesisCollection is ERC1155, Ownable {
         libraryAddress = _libraryAddress;
     }
 
-    string public name;
-    string public symbol;
-    uint256 public tokenCount;
-    string public baseUri;
-    string public ipfsFolderHash;
-    address public libraryAddress;
-
-    function mint(uint256 amount) public onlyOwner {
+    function mint(uint256 _amount) public onlyOwner {
         tokenCount += 1;
-        _mint(msg.sender, tokenCount, amount, "");
+        _mint(msg.sender, tokenCount, _amount, "");
         _setApprovalForAll(msg.sender, libraryAddress, true);
     }
 

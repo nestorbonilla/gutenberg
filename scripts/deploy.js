@@ -19,9 +19,23 @@ async function main() {
 
   console.log("Genesis Collection successfully minted");
 
-  await library.createBook(genesisCollection.address, 1, 0, 10); // nftContract, tokenId, price, amount
+  // await library.createSemiFungibleBook(genesisCollection.address, 1, 0, 10); // nftContract, tokenId, price, amount
 
-  console.log("Book created at Library");
+  // console.log("Book created at Library");
+
+  // const SecondaryCollection = await ethers.getContractFactory("SecondaryCollection");
+  // const secondaryCollection = await SecondaryCollection.deploy("Secondary", "BOOK", library.address); // name, symbol, libraryAddress
+  // await secondaryCollection.deployed();
+
+  // const new721BookId = await secondaryCollection.mint(""); //tokenUri
+
+  // console.log("Book with standard 721 minted");
+
+  // await library.createNonFungibleBook(secondaryCollection.address, 1, 0); // nftContract, tokenId, price
+
+  // console.log("Book 721 created at Library");
+
+  // console.log("Book with standard 721 created at Library");
 }
 
 main()
