@@ -11,7 +11,9 @@ import "hardhat/console.sol";
 contract Library is ReentrancyGuard {
     using Counters for Counters.Counter;
     Counters.Counter private _bookIds;
-    Counters.Counter private _booksSold;
+    Counters.Counter private _booksFullySold;
+
+    uint256 private bookSales;
 
     address payable owner;
 
@@ -24,25 +26,26 @@ contract Library is ReentrancyGuard {
         uint256 bookId;
         address nftContract;
         uint256 tokenId;
-        uint256 amount;
+        uint256 units;
         address payable seller;
         address payable owner;
         uint256 price;
-        bool sold;
+        uint256 sales;
     }
 
     mapping(uint256 => Book) private idToBook;
+    mapping(uint256 => uint256) private salesByIdBook;
     uint256 private royaltyFee;
 
     event SemiFungibleBookCreated(
         uint256 indexed bookId,
         address indexed nftContract,
         uint256 indexed tokenId,
-        uint256 amount,
+        uint256 units,
         address seller,
         address owner,
         uint256 price,
-        bool sold
+        uint256 sales
     );
 
     event NonFungibleBookCreated(
@@ -52,7 +55,7 @@ contract Library is ReentrancyGuard {
         address seller,
         address owner,
         uint256 price,
-        bool sold
+        uint256 sales
     );
 
     /* Places a semi fungible book for sale on the library ~ ERC1155*/
@@ -60,7 +63,7 @@ contract Library is ReentrancyGuard {
         address nftContract,
         uint256 tokenId,
         uint256 price,
-        uint256 amount
+        uint256 units
     ) public payable nonReentrant {
         _bookIds.increment();
         uint256 bookId = _bookIds.current();
@@ -68,18 +71,18 @@ contract Library is ReentrancyGuard {
             bookId,
             nftContract,
             tokenId,
-            amount,
+            units,
             payable(msg.sender),
             payable(address(0)),
             price,
-            false
+            0
         );
 
         IERC1155(nftContract).safeTransferFrom(
             msg.sender,
             address(this),
             tokenId,
-            amount,
+            units,
             ""
         );
 
@@ -87,11 +90,11 @@ contract Library is ReentrancyGuard {
             bookId,
             nftContract,
             tokenId,
-            amount,
+            units,
             msg.sender,
             address(0),
             price,
-            false
+            0
         );
     }
 
@@ -111,7 +114,7 @@ contract Library is ReentrancyGuard {
             payable(msg.sender),
             payable(address(0)),
             price,
-            false
+            0
         );
 
         IERC721(nftContract).safeTransferFrom(
@@ -128,7 +131,7 @@ contract Library is ReentrancyGuard {
             msg.sender,
             address(0),
             price,
-            false
+            0
         );
     }
 
@@ -145,6 +148,10 @@ contract Library is ReentrancyGuard {
             msg.value == price * amount,
             "Please submit the asking price in order to complete the purchase"
         );
+        require(
+            idToBook[bookId].units >= amount,
+            "Amount not available for sale"
+        );
 
         if (price > 0) {
             idToBook[bookId].seller.transfer(
@@ -160,19 +167,24 @@ contract Library is ReentrancyGuard {
             ""
         );
         idToBook[bookId].owner = payable(msg.sender);
-        idToBook[bookId].sold = true;
-        _booksSold.increment();
+        idToBook[bookId].sales += amount;
+        bookSales += amount;
+
+        if (idToBook[bookId].units == idToBook[bookId].sales) {
+            _booksFullySold.increment();
+        }
     }
 
     /* Returns all unsold library books */
     function fetchBooks() public view returns (Book[] memory) {
         uint256 bookCount = _bookIds.current();
-        uint256 unsoldBookCount = _bookIds.current() - _booksSold.current();
+        uint256 unsoldBookCount = _bookIds.current() -
+            _booksFullySold.current();
         uint256 currentIndex = 0;
 
         Book[] memory books = new Book[](unsoldBookCount);
         for (uint256 i = 0; i < bookCount; i++) {
-            if (idToBook[i + 1].owner == address(0)) {
+            if (idToBook[i + 1].units > idToBook[i + 1].sales) {
                 uint256 currentId = i + 1;
                 Book storage currentBook = idToBook[currentId];
                 books[currentIndex] = currentBook;
