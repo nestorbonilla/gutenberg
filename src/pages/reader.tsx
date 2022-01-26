@@ -67,8 +67,10 @@ const Reader: NextPage = () => {
     renditionRef.current!.display(cfiRange);
   }
 
-  function deleteHighlight(cfiRange: string, id: string) {
+  async function deleteHighlight(cfiRange: string, id: string) {
     renditionRef.current!.annotations.remove(cfiRange, 'highlight')
+    const highlight = await new Moralis.Query(MoralisHighlight).get(id);
+    await highlight.destroy();
     setHighlights(highlights.filter((item) => item.objectId !== id));
   }
 
