@@ -36,11 +36,11 @@ module.exports = {
     },
     mumbai: {
       url: process.env.MUMBAI_RPC,
-      accounts: [ process.env.PRIVATE_KEY ]
+      accounts: [ process.env.LIBRARY_PRIVATE_KEY, process.env.AUTHOR_PRIVATE_KEY ]
     },
     rinkeby: {
       url: process.env.RINKEBY_RPC,
-      accounts: [ process.env.PRIVATE_KEY ]
+      accounts: [ process.env.LIBRARY_PRIVATE_KEY, process.env.AUTHOR_PRIVATE_KEY ]
     }
   }
 };
