@@ -8,6 +8,7 @@ export type nft_book = {
   gr_url: string;
   ipfs_url: string;
   authors: string[];
+  annotations: string[]; //people who annotated. 
   published: string;
   price: string;
   hash: string;
@@ -24,6 +25,7 @@ export const mockBooks: nft_book[] = [
       "https://www.goodreads.com/book/show/24213.Alice_s_Adventures_in_Wonderland_Through_the_Looking_Glass",
     ipfs_url: "",
     authors: ["Lewis Carroll"],
+    annotations: ["Carl Lippert" , "Nestor Banilla"],
     published: "1871-12-27",
     price: "20.00",
     id: "0",
@@ -38,6 +40,7 @@ export const mockBooks: nft_book[] = [
     gr_url: "https://www.goodreads.com/book/show/433567.Flatland",
     ipfs_url: "",
     authors: ["Edwin A. Abbott"],
+    annotations: ["Sonia Joseph" , "Grace Wang"],
     published: "1884-01-01",
     price: "25.00",
     id: "1",
@@ -52,6 +55,7 @@ export const mockBooks: nft_book[] = [
     gr_url: "https://www.goodreads.com/book/show/8909.The_War_of_the_Worlds",
     ipfs_url: "",
     authors: ["H. G. Wells"],
+    annotations: ["Grace Wang", "Carl Lippert"],
     published: "1897-01-01",
     price: "15.00",
     id: "2",
@@ -67,6 +71,7 @@ export const mockBooks: nft_book[] = [
       "https://www.goodreads.com/book/show/32829.Journey_to_the_Center_of_the_Earth",
     ipfs_url: "",
     authors: ["Jules Verne"],
+    annotations: ["Grace Wang", "Carl Lippert"],
     published: "1864-11-25",
     price: "17.00",
     id: "3",
@@ -81,6 +86,7 @@ export const mockBooks: nft_book[] = [
     gr_url: "https://www.goodreads.com/book/show/35031085-frankenstein",
     ipfs_url: "",
     authors: ["Mary Wollstonecraft Shelley"],
+    annotations: ["Grace Wang", "Carl Lippert"],
     published: "1818-01-01",
     price: "11.00",
     id: "4",
@@ -95,6 +101,7 @@ export const mockBooks: nft_book[] = [
     gr_url: "https://www.goodreads.com/book/show/516570.Erewhon",
     ipfs_url: "",
     authors: ["Samuel Butler"],
+    annotations: ["Grace Wang", "Carl Lippert"],
     published: "1872-01-01",
     price: "20.00",
     id: "5",
@@ -109,6 +116,7 @@ export const mockBooks: nft_book[] = [
     gr_url: "https://www.goodreads.com/book/show/6142025-mr-spaceship",
     ipfs_url: "",
     authors: ["Philip K. Dick"],
+    annotations: ["Sonia Joseph" , "Nestor Banilla"],
     published: "1953-01-01",
     price: "44.00",
     id: "6",
@@ -123,6 +131,7 @@ export const mockBooks: nft_book[] = [
     gr_url: "https://www.goodreads.com/book/show/7733.Gulliver_s_Travels",
     ipfs_url: "",
     authors: ["Jonathan Swift"],
+    annotations: ["Carl Lippert" , "Nestor Banilla"],
     published: "1726-10-28",
     price: "29.00",
     id: "7",

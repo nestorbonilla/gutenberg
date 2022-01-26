@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 const BuyERC115 = () => {
     const router = useRouter()
     const { hash } = router.query; 
-
+    
     const buy = async () => {
         //transfer erc1155 token
     }
