@@ -13,6 +13,7 @@ const Reader: NextPage = () => {
   const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [address, setAddress] = useState<string>();
   const renditionRef = useRef<Rendition>();
+  const tocRef = useRef<any>();
   const MoralisHighlight = Moralis.Object.extend("Highlight");
 
   useEffect(() => {
@@ -34,13 +35,16 @@ const Reader: NextPage = () => {
         renditionRef.current!.off("selected", saveHighlight)
       }
     }
-  }, [highlights]);
+  });
 
   async function saveHighlight(cfiRange: string, contents: any) {
+    const { href } = renditionRef.current!.location.start;
+    const chapter = tocRef.current!.find((item: any) => item.href === href);
     const highlightInput = {
       address,
       text: renditionRef.current!.getRange(cfiRange).toString(),
-      cfiRange
+      cfiRange,
+      chapter,
     };
     const highlight = await new MoralisHighlight().save(highlightInput);
     setHighlights(highlights.concat(highlight.toJSON() as Highlight));
@@ -81,6 +85,7 @@ const Reader: NextPage = () => {
           location={location}
           locationChanged={locationChanged}
           getRendition={getRendition}
+          tocChanged={toc => tocRef.current = toc}
           url="https://gerhardsletten.github.io/react-reader/files/alice.epub"
         />
       </div>
@@ -93,6 +98,7 @@ const Reader: NextPage = () => {
       </button>}
       <RightSlider
         highlights={highlights}
+        toc={tocRef.current || []}
         show={showHighlights}
         setShow={setShowHighlights}
         select={selectHighlight}
