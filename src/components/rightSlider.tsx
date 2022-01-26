@@ -1,13 +1,23 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Dialog, Transition } from '@headlessui/react';
-import { TrashIcon, XIcon } from '@heroicons/react/outline';
+import { XIcon } from '@heroicons/react/outline';
 import { Fragment } from 'react';
+import ChapterHighlights from './highlightComponent';
+
+export interface Toc {
+  label: string;
+  href: string;
+}
 
 export interface Highlight {
   objectId: string;
   text: string;
   cfiRange: string;
   notes?: string;
+  chapter: {
+    href: string;
+    label: string;
+  }
 }
 
 function classNames(...classes: any[]) {
@@ -15,6 +25,7 @@ function classNames(...classes: any[]) {
 }
 
 interface RightSliderProps {
+  toc: Toc[];
   highlights: Highlight[];
   show: boolean;
   setShow: (show: boolean) => void;
@@ -23,6 +34,15 @@ interface RightSliderProps {
 }
 
 export default function RightSlider(props: RightSliderProps) {
+  const groupedHighlights = props.highlights.reduce((acc, item) => {
+    const chapter = item.chapter.href;
+    if (!acc[chapter]) {
+      acc[chapter] = [];
+    }
+    acc[chapter].push(item);
+    return acc;
+  }, {} as { [chapter: string]: Highlight[] });
+
   return (
     <Transition.Root show={props.show} as={Fragment}>
       <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={() => props.setShow(false)} style={{ zIndex: 100 }} >
@@ -57,31 +77,11 @@ export default function RightSlider(props: RightSliderProps) {
                     </div>
                   </div>
                   <div className="border-b border-gray-200" />
-                  <ul role="list" className="flex-1 divide-y divide-gray-200 overflow-y-auto">
-                    {props.highlights.map((highlight) => (
-                      <li key={highlight.objectId}>
-                        <div className="flex items-center">
-                          <button className="relative group py-6 px-5 flex-1 truncate" onClick={() => props.select(highlight.cfiRange)}>
-                            <div className="absolute inset-0 group-hover:bg-gray-100" aria-hidden="true" />
-                            <div className="flex-1 flex items-center min-w-0 relative">
-                              <div className="ml-4 truncate">
-                                <p className="text-sm font-medium text-gray-900 truncate">{highlight.text}</p>
-                              </div>
-                            </div>
-                          </button>
-                          <button
-                            className="relative group px-5 flex self-stretch items-center justify-center"
-                            onClick={() => props.delete(highlight.cfiRange, highlight.objectId)}>
-                            <div className="absolute inset-0 group-hover:bg-gray-100" aria-hidden="true" />
-                            <TrashIcon
-                              className="w-5 text-gray-400 group-hover:text-gray-500 justify-content-stretch z-50"
-                              aria-hidden="true"
-                            />
-                          </button>
-                        </div>
-                      </li>
+                  {props.toc
+                    .filter(chapter => groupedHighlights[chapter.href])
+                    .map(chapter => (
+                      <ChapterHighlights chapterLabel={chapter.label} highlights={groupedHighlights[chapter.href]} select={props.select} delete={props.delete} />
                     ))}
-                  </ul>
                 </div>
               </div>
             </Transition.Child>
