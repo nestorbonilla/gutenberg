@@ -1,21 +1,18 @@
-import "../styles/globals.css";
+import Moralis from "moralis";
 import type { AppProps } from "next/app";
-// import { useEffect } from "react";
-// import Moralis from "moralis";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
 
-  // const initMoralis = async () => {
-  //   console.log("Init Moralis");
-  //   Moralis.start({
-  //     serverUrl: "https://7fqgvttpqukt.usemoralis.com:2053/server",
-  //     appId: "585mUNiZ538xo3FEY7lbXWFZjjFPNxKOvUstjfhc",
-  //   });
-  // };
+  const initMoralis = async () => {
+    console.log("Init Moralis");
+    Moralis.start({
+      serverUrl: "https://7fqgvttpqukt.usemoralis.com:2053/server",
+      appId: "585mUNiZ538xo3FEY7lbXWFZjjFPNxKOvUstjfhc",
+    });
+  };
 
-  // useEffect(() => {
-  //   initMoralis();
-  // }, []);
+  initMoralis();
 
   return <Component {...pageProps} />;
 }

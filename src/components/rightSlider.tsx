@@ -1,10 +1,10 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Dialog, Transition } from '@headlessui/react'
-import { TrashIcon, XIcon } from '@heroicons/react/outline'
-import { Fragment } from 'react'
+import { Dialog, Transition } from '@headlessui/react';
+import { TrashIcon, XIcon } from '@heroicons/react/outline';
+import { Fragment } from 'react';
 
 export interface Highlight {
-  id: number;
+  id: string;
   text: string;
   cfiRange: string;
   notes?: string;
@@ -19,7 +19,7 @@ interface RightSliderProps {
   show: boolean;
   setShow: (show: boolean) => void;
   select: (cfiRange: string) => void;
-  delete: (cfiRange: string, id: number) => void;
+  delete: (cfiRange: string, id: string) => void;
 }
 
 export default function RightSlider(props: RightSliderProps) {
