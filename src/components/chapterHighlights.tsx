@@ -1,5 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { TrashIcon } from '@heroicons/react/outline';
+import { PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
+import AddNote from './addNote';
 import { Highlight } from './rightSlider';
 
 interface ChapterHighlightProps {
@@ -29,12 +30,22 @@ export default function ChapterHighlights(props: ChapterHighlightProps) {
                 className="relative group px-5 flex self-stretch items-center justify-center"
                 onClick={() => props.delete(highlight.cfiRange, highlight.objectId)}>
                 <div className="absolute inset-0 group-hover:bg-gray-100" aria-hidden="true" />
+                <PencilAltIcon
+                  className="w-5 text-gray-400 group-hover:text-gray-500 justify-content-stretch z-50"
+                  aria-hidden="true"
+                />
+              </button>
+              <button
+                className="relative group px-5 flex self-stretch items-center justify-center"
+                onClick={() => props.delete(highlight.cfiRange, highlight.objectId)}>
+                <div className="absolute inset-0 group-hover:bg-gray-100" aria-hidden="true" />
                 <TrashIcon
                   className="w-5 text-gray-400 group-hover:text-gray-500 justify-content-stretch z-50"
                   aria-hidden="true"
                 />
               </button>
             </div>
+            <AddNote />
           </li>
         ))}
       </ul>
