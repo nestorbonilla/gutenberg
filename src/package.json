@@ -9,17 +9,20 @@
     "update-types": "npx openapi-typescript https://qexoogbqjgjsjupjwxhe.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNjQzMDY2NDQyLCJleHAiOjE5NTg2NDI0NDJ9.CSd-FHtNqdeRPqw9sii7_zvBkOnqMFkPb1J0_SsADM4 --output types/supabase.ts"
   },
   "dependencies": {
+    "@davatar/react": "^1.8.1",
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.5",
     "@supabase/supabase-js": "^1.29.4",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.4.0",
     "@tailwindcss/typography": "^0.5.0",
+    "@walletconnect/web3-provider": "^1.7.1",
     "autoprefixer": "^10.4.2",
     "moralis": "^1.1.0",
     "next": "12.0.8",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-moralis": "^1.1.0",
     "react-reader": "^0.20.5"
   },
   "devDependencies": {

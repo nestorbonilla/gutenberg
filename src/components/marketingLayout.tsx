@@ -1,10 +1,10 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useEffect, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import Moralis from "moralis";
+import { useMoralis } from "react-moralis";
 import Link from "next/link";
-import { format } from "path/posix";
+import Davatar from "@davatar/react";
 
 const navigation = [
   { name: "My Library", href: "/library" },
@@ -14,40 +14,21 @@ const navigation = [
 ];
 
 const MarketingLayout = ({ children }: any) => {
+  const { isAuthenticated, authenticate, user } = useMoralis();
   const [wallet, setWallet] = useState<any>(false);
-
-  const formatAndSaveWallet = (address: string) => {
-    let concat =
-      address.substring(0, 6) +
-      "..." +
-      address.substring(address.length - 4, address.length);
-    setWallet(concat);
-  };
-
+  
   const connectWallet = async () => {
-    let user: any = Moralis.User.current();
-    if (!user) {
-      user = await Moralis.authenticate({
-        signingMessage: "Log in using Moralis",
-      })
-        .then(function (user) {
-          console.log("logged in user:", user);
-          console.log(user.get("ethAddress"));
-          let address = user.get("ethAddress");
-          formatAndSaveWallet(address);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    if (!isAuthenticated) {
+      await authenticate({ signingMessage: "Authorize linking of your wallet" });
     }
   };
 
   useEffect(() => {
-    let user: any = Moralis.User.current();
     if (user) {
-      formatAndSaveWallet(user.get("ethAddress"));
+      setWallet(user.get("ethAddress"))
     }
-  }, []);
+  }, [user]);
+
 
   return (
     <div className="relative bg-gray-50 overflow-hidden min-h-screen">
@@ -165,7 +146,17 @@ const MarketingLayout = ({ children }: any) => {
                     onClick={connectWallet}
                     className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
                   >
-                    {wallet ? wallet : "Connect Wallet"}
+                    {wallet ? (
+                      <Davatar
+                        size={24}
+                        address={wallet}
+                        // provider={provider} // optional
+                        // graphApiKey={apiKey} // optional
+                        generatedAvatarType="jazzicon" // optional, 'jazzicon' or 'blockies'
+                      />
+                    ) : (
+                      "Connect Wallet"
+                    )}
                   </a>
                 </span>
               </div>
@@ -214,7 +205,7 @@ const MarketingLayout = ({ children }: any) => {
                   onClick={connectWallet}
                   className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100"
                 >
-                  Connect Wallet
+                  {wallet ? wallet : "Connect Wallet"}
                 </a>
               </div>
             </Popover.Panel>

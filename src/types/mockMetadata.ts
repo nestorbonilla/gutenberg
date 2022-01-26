@@ -29,7 +29,7 @@ export const mockBooks: nft_book[] = [
     published: "1871-12-27",
     price: "20.00",
     id: "0",
-    hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf",
+    hash: "0x762901CA5eE5ee185A2E1Cf41Ea850bC9CE28401",
     erc1155_parent_hash: "asijdfopajsodfjalsdjflakjsdf;lkjas;dlf"
   },
   {
