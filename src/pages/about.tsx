@@ -22,7 +22,22 @@ const people = [
         twitterUrl: "https://twitter.com/nestorbonillas",
         imageUrl: "https://pbs.twimg.com/profile_images/1402718800366116864/FS4OusjQ_400x400.jpg",
         linkedinUrl: "https://www.linkedin.com/in/nestorbonilla/",
-    },
+  },
+     {
+      name: "Dalia Katan",
+      role: "",
+      twitterUrl: "https://twitter.com/daliakatan",
+      imageUrl: "https://pbs.twimg.com/profile_images/1476739180189396995/oXgEMno0_400x400.jpg",
+      linkedinUrl: "https://www.linkedin.com/in/nestorbonilla/",
+  },
+  {
+    name: "Sonia Joseph",
+    role: "",
+    twitterUrl: "https://twitter.com/soniajoseph_",
+    imageUrl: "https://pbs.twimg.com/profile_images/1482899147967586312/qUQQ4A29_400x400.jpg",
+    linkedinUrl: "https://www.linkedin.com/in/nestorbonilla/",
+},
+     
   
   // More people...
 ];
@@ -77,7 +92,7 @@ const About = () => {
                           </svg>
                         </a>
                       </li>
-                      <li>
+                      {/* <li>
                         <a
                           href={person.linkedinUrl}
                           className="text-gray-400 hover:text-gray-500"
@@ -96,7 +111,7 @@ const About = () => {
                             />
                           </svg>
                         </a>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                 </div>

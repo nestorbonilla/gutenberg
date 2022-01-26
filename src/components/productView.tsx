@@ -5,6 +5,8 @@ import { CurrencyDollarIcon, GlobeIcon } from "@heroicons/react/outline";
 import MarketingLayout from "./marketingLayout";
 import { mockBooks } from "../types/mockMetadata";
 import { nft_book } from "../types/mockMetadata";
+import BookList from "./bookList";
+import AnnotationsList from "./annotationsList";
 // const book = {
 //   name: "Basic Tee",
 //   price: "$35",
@@ -84,12 +86,12 @@ function classNames(...classes: any) {
 
 type Props = {
   book: nft_book;
-//   mint: boolean;
+  //   mint: boolean;
   erc721: boolean;
-  callback: () => {}; 
-}
+  callback: () => {};
+};
 
-const ProductView = ({book, erc721, callback}: Props) => {
+const ProductView = ({ book, erc721, callback }: Props) => {
   //   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   //     const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const [mintBook, setMintBook] = useState<nft_book>(book);
@@ -131,19 +133,19 @@ const ProductView = ({book, erc721, callback}: Props) => {
                 <h1 className="text-xl font-medium text-gray-900">
                   {mintBook.name}
                 </h1>
-                <p className="text-xl font-medium text-gray-900">
-                  {mintBook.price}
+                <p className="text-xl font-medium rounded-full bg-green-100 text-green-800">
+                  ${mintBook.price}
                 </p>
               </div>
               {/* Reviews */}
               {/* <div className="mt-4">
                 <h2 className="sr-only">Reviews</h2>
                 <div className="flex items-center"> */}
-                  {/* <p className="text-sm text-gray-700">
+              {/* <p className="text-sm text-gray-700">
                     {4}
                     <span className="sr-only"> out of 5 stars</span>
                   </p> */}
-                  {/* <div className="ml-1 flex items-center">
+              {/* <div className="ml-1 flex items-center">
                     {[0, 1, 2, 3, 4].map((rating) => (
                       <StarIcon
                         key={rating}
@@ -157,23 +159,23 @@ const ProductView = ({book, erc721, callback}: Props) => {
                       />
                     ))}
                   </div> */}
-                  {/* <div
+              {/* <div
                     aria-hidden="true"
                     className="ml-4 text-sm text-gray-300"
                   >
                     · */}
-                  {/* </div>
+              {/* </div>
                   <div className="ml-4 flex">
                     <a
                       href="#"
                       className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
                     > */}
-                      {/* See all {book} reviews */}
-                    {/* </a>
+              {/* See all {book} reviews */}
+              {/* </a>
                   </div>
                 </div>
                           </div>  */}
-                          {/*  */}
+              {/*  */}
             </div>
 
             {/* Image gallery */}
@@ -194,47 +196,18 @@ const ProductView = ({book, erc721, callback}: Props) => {
 
             <div className="mt-8 lg:col-span-5">
               <form>
-                {/* Color picker */}
-                {/* <div>
-                  <h2 className="text-sm font-medium text-gray-900">Color</h2>
-
-                  <RadioGroup
-                    value={selectedColor}
-                    onChange={setSelectedColor}
-                    className="mt-2"
-                  >
-                    <RadioGroup.Label className="sr-only">
-                      Choose a color
-                    </RadioGroup.Label>
-                    <div className="flex items-center space-x-3">
-                      {book.colors.map((color) => (
-                        <RadioGroup.Option
-                          key={color.name}
-                          value={color}
-                          className={({ active, checked }) =>
-                            classNames(
-                              color.selectedColor,
-                              active && checked ? "ring ring-offset-1" : "",
-                              !active && checked ? "ring-2" : "",
-                              "-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none"
-                            )
-                          }
-                        >
-                          <RadioGroup.Label as="p" className="sr-only">
-                            {color.name}
-                          </RadioGroup.Label>
-                          <span
-                            aria-hidden="true"
-                            className={classNames(
-                              color.bgColor,
-                              "h-8 w-8 border border-black border-opacity-10 rounded-full"
-                            )}
-                          />
-                        </RadioGroup.Option>
-                      ))}
-                    </div>
-                  </RadioGroup>
-                </div> */}
+                {/* Annotations */}
+                {erc721 ? (
+                  <div>
+                    <h2 className="text-md font-medium text-gray-900 mb-5 ">
+                      Annotated By:{" "}
+                    </h2>
+                    {/* {book.annotations.map((annotation) => (
+                      //todo bring in actual annotations
+                    ))} */}
+                    <AnnotationsList />
+                  </div>
+                ) : null}
 
                 {/* Size picker */}
                 <div className="mt-8">
@@ -290,7 +263,7 @@ const ProductView = ({book, erc721, callback}: Props) => {
                   onClick={callback}
                   className="mt-8 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  {erc721 ? 'Mint Annotated NFT' : 'Buy Original'}
+                  {erc721 ? "Mint Annotated NFT" : "Buy 456 / 500 Genesis*"}
                 </button>
               </form>
 
@@ -353,8 +326,9 @@ const ProductView = ({book, erc721, callback}: Props) => {
         </div>
       </div>
       {/* </div> */}
+      <BookList hash={book.hash} />
     </MarketingLayout>
   );
-}
+};
 
-export default ProductView; 
+export default ProductView;
