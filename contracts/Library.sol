@@ -5,16 +5,17 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "hardhat/console.sol";
 
-contract Library is ReentrancyGuard {
+contract Library is ReentrancyGuard, ERC721Holder, ERC1155Holder {
     using Counters for Counters.Counter;
     Counters.Counter private _bookIds;
     Counters.Counter private _booksFullySold;
 
     uint256 private bookSales;
-
     address payable owner;
 
     constructor(uint256 _royaltyFee) {
