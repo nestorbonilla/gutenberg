@@ -2,7 +2,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import { Fragment } from 'react';
-import ChapterHighlights from './highlightComponent';
+import ChapterHighlights from './chapterHighlights';
 
 export interface Toc {
   label: string;
@@ -77,11 +77,19 @@ export default function RightSlider(props: RightSliderProps) {
                     </div>
                   </div>
                   <div className="border-b border-gray-200" />
-                  {props.toc
-                    .filter(chapter => groupedHighlights[chapter.href])
-                    .map(chapter => (
-                      <ChapterHighlights chapterLabel={chapter.label} highlights={groupedHighlights[chapter.href]} select={props.select} delete={props.delete} />
-                    ))}
+                  <ul role="list" className="divide-y divide-gray-200">
+                    {props.toc
+                      .filter(chapter => groupedHighlights[chapter.href])
+                      .map(chapter => (
+                        <ChapterHighlights
+                          key={chapter.href}
+                          chapterLabel={chapter.label}
+                          highlights={groupedHighlights[chapter.href]}
+                          select={props.select}
+                          delete={props.delete}
+                        />
+                      ))}
+                  </ul>
                 </div>
               </div>
             </Transition.Child>
