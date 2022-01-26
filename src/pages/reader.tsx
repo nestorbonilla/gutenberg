@@ -69,7 +69,7 @@ const Reader: NextPage = () => {
 
   function deleteHighlight(cfiRange: string, id: string) {
     renditionRef.current!.annotations.remove(cfiRange, 'highlight')
-    setHighlights(highlights.filter((item) => item.id !== id));
+    setHighlights(highlights.filter((item) => item.objectId !== id));
   }
 
   return (

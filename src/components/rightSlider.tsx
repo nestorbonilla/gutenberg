@@ -4,7 +4,7 @@ import { TrashIcon, XIcon } from '@heroicons/react/outline';
 import { Fragment } from 'react';
 
 export interface Highlight {
-  id: string;
+  objectId: string;
   text: string;
   cfiRange: string;
   notes?: string;
@@ -59,7 +59,7 @@ export default function RightSlider(props: RightSliderProps) {
                   <div className="border-b border-gray-200" />
                   <ul role="list" className="flex-1 divide-y divide-gray-200 overflow-y-auto">
                     {props.highlights.map((highlight) => (
-                      <li key={highlight.cfiRange}>
+                      <li key={highlight.objectId}>
                         <div className="flex items-center">
                           <button className="relative group py-6 px-5 flex-1 truncate" onClick={() => props.select(highlight.cfiRange)}>
                             <div className="absolute inset-0 group-hover:bg-gray-100" aria-hidden="true" />
@@ -71,7 +71,7 @@ export default function RightSlider(props: RightSliderProps) {
                           </button>
                           <button
                             className="relative group px-5 flex self-stretch items-center justify-center"
-                            onClick={() => props.delete(highlight.cfiRange, highlight.id)}>
+                            onClick={() => props.delete(highlight.cfiRange, highlight.objectId)}>
                             <div className="absolute inset-0 group-hover:bg-gray-100" aria-hidden="true" />
                             <TrashIcon
                               className="w-5 text-gray-400 group-hover:text-gray-500 justify-content-stretch z-50"
