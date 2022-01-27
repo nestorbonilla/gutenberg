@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { useMoralis } from "react-moralis";
 import Book from "./book";
 import { nft_book } from "../types/mockMetadata";
 import { Action } from "./book";
+import { LIBRARY_CONTRACT } from '../utils/addresses';
+import { abi } from "../../artifacts/contracts/Library.sol/Library.json";
+import { useMoralis } from 'react-moralis';
 
 type Props = {
   books: nft_book[];
@@ -10,41 +12,43 @@ type Props = {
 };
 
 const ProductGrid = ({ books, action }: Props) => {
-  const [nfts, setNfts] = useState<any>(books);
+  const [meta, setMeta] = useState<any>([]);
   const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } = useMoralis();
+  
+  const call = async () => {
 
-  const getBookMetadata = async () => {
-    // Moralis.start({
-    //   serverUrl: "https://7fqgvttpqukt.usemoralis.com:2053/server",
-    //   appId: "585mUNiZ538xo3FEY7lbXWFZjjFPNxKOvUstjfhc",
-    // });
-    // BAYC
-    const options: any = {
-      address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
-      chain: "eth",
+    console.log("Calling");
+
+    const readOptions = {
+      contractAddress: LIBRARY_CONTRACT,
+      functionName: "fetchBooks",
+      abi,
     };
 
-    const NFTs = await Moralis.Web3API.token.getAllTokenIds(options);
-    setNfts(NFTs.result);
-    console.log(NFTs);
-  };
+    await Moralis.enableWeb3();
+    const data = await Moralis.executeFunction(readOptions);
 
-  // useEffect(() => {
-  //   getBookMetadata();
-  // }, []);
+    console.log("executeFunction respone ?=>" + JSON.stringify(data));
+
+    console.log(data);
+
+    setMeta(data);
+  };
 
   useEffect(() => {
     if (isInitialized && isAuthenticated && !isWeb3Enabled) {
-      getBookMetadata();
+      call();
     }
   }, [isInitialized, isAuthenticated, isWeb3Enabled]);
+
+ 
 
   return (
     <div>
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {nfts.map((nft: any) => (
-            <Book key={nft.id} book={nft} action={action} />
+          {meta.map((nft: any, index: number) => (
+            <Book key={index} book={nft} action={action} />
           ))}
         </div>
       </div>

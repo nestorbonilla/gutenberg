@@ -1,19 +1,14 @@
 import { useState, useEffect } from "react";
-import { StarIcon } from "@heroicons/react/solid";
-import { RadioGroup } from "@headlessui/react";
 import { CurrencyDollarIcon, GlobeIcon } from "@heroicons/react/outline";
 import MarketingLayout from "./marketingLayout";
-import { mockBooks } from "../types/mockMetadata";
 import { nft_book } from "../types/mockMetadata";
 import BookList from "./bookList";
-import Annotationer from "./annotationer";
-// import Moralis from "moralis";
 import {
-  useWeb3ExecuteFunction,
-  useApiContract,
-  useMoralis,
+  useMoralis
 } from "react-moralis";
 import { abi } from "../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
+import axios from "axios";
+import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../utils/addresses";
 
 const policies = [
   {
@@ -30,41 +25,23 @@ const policies = [
 
 type Props = {
   book: nft_book;
-  //   mint: boolean;
   erc721: boolean;
   callback: () => {};
 };
 
 const ProductView = ({ book, erc721, callback }: Props) => {
-  const [mintBook, setMintBook] = useState<nft_book>(book);
+
+  const [meta, setMeta] = useState<any>(false);
 
   const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
     useMoralis();
 
-  const { data, error, runContractFunction, isFetching, isLoading } =
-    useApiContract({
-      abi,
-      address: "0x762901CA5eE5ee185A2E1Cf41Ea850bC9CE28401",
-      functionName: "uri",
-      params: {
-        _tokenId: 1,
-      },
-    });
-
-  useEffect(() => {
-    // fetch();
-    runContractFunction();
-  }, []);
-
-  useEffect(() => {
-    console.log("Data?=>" + data);
-    console.log("Error?=>" + error);
-  }, [data, error]);
-
   const call = async () => {
+    console.log("Calling");
+
     const readOptions = {
-      contractAddress: "0x762901CA5eE5ee185A2E1Cf41Ea850bC9CE28401",
-      functionName: "uri",
+      contractAddress: LIBRARY_CONTRACT,
+      functionName: "fetchBook",
       abi,
       params: {
         _tokenId: 1,
@@ -72,9 +49,15 @@ const ProductView = ({ book, erc721, callback }: Props) => {
     };
 
     await Moralis.enableWeb3();
-    const message = await Moralis.executeFunction(readOptions);
+    const pinataLink = await Moralis.executeFunction(readOptions);
 
-    console.log(message);
+    console.log("executeFunction respone ?=>" + pinataLink);
+
+    let { data } = await axios.get(String(pinataLink));
+
+    console.log(data);
+
+    setMeta(data);
   };
 
   useEffect(() => {
@@ -118,10 +101,10 @@ const ProductView = ({ book, erc721, callback }: Props) => {
             <div className="lg:col-start-8 lg:col-span-5">
               <div className="flex justify-between">
                 <h1 className="text-xl font-medium text-gray-900">
-                  {mintBook.name}
+                  {meta.name}
                 </h1>
                 <p className="text-xl font-medium rounded-full bg-green-100 text-green-800">
-                  ${mintBook.price}
+                  ${meta.price}
                 </p>
               </div>
               {/* Reviews */}
@@ -173,7 +156,7 @@ const ProductView = ({ book, erc721, callback }: Props) => {
                 {book.images.map((image) => ( */}
               <img
                 // key={mintBook.image}
-                src={mintBook.image}
+                src={meta.image}
                 // alt={image.imageAlt}
                 className={"lg:col-span-2 lg:row-span-2 rounded-lg"}
               />
@@ -189,7 +172,7 @@ const ProductView = ({ book, erc721, callback }: Props) => {
                     <h2 className="text-md font-medium text-gray-900 mb-5 ">
                       Annotated By:{" "}
                     </h2>
-                    <Annotationer annotation={book.annotations} />
+                    {/* <Annotationer annotation={book.annotations} /> */}
                   </div>
                 ) : null}
 
