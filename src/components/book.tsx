@@ -60,7 +60,7 @@ const Book = ({ book_id, action }: Props) => {
     const pinataLink = await Moralis.executeFunction(getMetaData);
 
     console.log(
-      "executeFunction respone in book ?=>" +
+      "executeFunction response in book ?=>" +
         JSON.stringify(pinataLink, null, 3)
     );
 

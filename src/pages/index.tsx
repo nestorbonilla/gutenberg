@@ -27,22 +27,17 @@ export default function Home() {
     };
 
     await Moralis.enableWeb3();
-    const data = await Moralis.executeFunction(readOptions);
+    const originalData = await Moralis.executeFunction(readOptions);
 
-    console.log("executeFunction response ?=>" + JSON.stringify(data));
+    const data = JSON.stringify(originalData);
+    const parsedData = JSON.parse(data);
 
-    let ids = Array(data).map((item: any) => {
-      // console.log("Item?=> " + JSON.stringify(item, null, 3));
-      // console.log("Item?=> " + JSON.stringify(item[0], null, 3));
-      console.log("Item?=> " + JSON.stringify(item[0][0], null, 3));
-      let blob = JSON.stringify(item[0][0]);
-      let blob2 = JSON.parse(blob);
-      let id = blob2.hex;
-      console.log("id?=> " + id);
-      return hexToDec(id);
+    let ids: number[] = [];
+
+    parsedData.forEach((item: any) => {
+      console.log("Item ?=>" + JSON.stringify(item, null, 3));
+      ids.push(hexToDec(item[0].hex));
     });
-
-    console.log("Ids?=> " + JSON.stringify(ids, null, 3));
 
     setBooksIds(ids);
   };
