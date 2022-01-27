@@ -48,7 +48,7 @@ const ProductView = ({ book, erc721, callback }: Props) => {
       },
     };
 
-    await Moralis.enableWeb3();
+    // await Moralis.enableWeb3();
     const pinataLink = await Moralis.executeFunction(readOptions);
 
     console.log("executeFunction respone ?=>" + pinataLink);

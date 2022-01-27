@@ -35,7 +35,6 @@ export default function Home() {
     let ids: number[] = [];
 
     parsedData.forEach((item: any) => {
-      console.log("Item ?=>" + JSON.stringify(item, null, 3));
       ids.push(hexToDec(item[0].hex));
     });
 

@@ -25,7 +25,7 @@ const hexToDec = (hexString: string) => {
 };
 
 const Book = ({ book_id, action }: Props) => {
-
+  console.log("Book id in book -> " + book_id);
   const [metadata, setMetadata] = useState<any>();
   const [priceData, setPriceData] = useState<any>();
 
@@ -83,7 +83,7 @@ const Book = ({ book_id, action }: Props) => {
       },
     };
 
-    await Moralis.enableWeb3();
+    // await Moralis.enableWeb3();
     const blob = await Moralis.executeFunction(libraryCall);
 
     console.log(
@@ -96,7 +96,7 @@ const Book = ({ book_id, action }: Props) => {
 
   const makeCalls = async () => {
     console.log("Getting -> " + book_id);
-    await Moralis.enableWeb3();
+    // await Moralis.enableWeb3();
     getMetaData();
     getLibraryData(); 
   }
