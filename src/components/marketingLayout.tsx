@@ -1,9 +1,9 @@
-import { Fragment, useEffect, useState } from "react";
+import Davatar from "@davatar/react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import { useMoralis } from "react-moralis";
 import Link from "next/link";
-import Davatar from "@davatar/react";
+import { Fragment, useEffect, useState } from "react";
+import { useMoralis } from "react-moralis";
 
 const navigation = [
   { name: "My Library", href: "/library" },
@@ -15,6 +15,7 @@ const navigation = [
 const MarketingLayout = ({ children }: any) => {
   const { isAuthenticated, authenticate, user } = useMoralis();
   const [wallet, setWallet] = useState<any>(false);
+  const [address, setAddress] = useState("");
 
   const formatAndSaveWallet = (address: string) => {
     let concat =
@@ -34,6 +35,7 @@ const MarketingLayout = ({ children }: any) => {
 
   useEffect(() => {
     if (user) {
+      setAddress(user.get("ethAddress"));
       formatAndSaveWallet(user.get("ethAddress"));
     }
   }, [user]);
@@ -158,7 +160,7 @@ const MarketingLayout = ({ children }: any) => {
                       <div className="space-x-2 flex flex-row">
                         <Davatar
                           size={24}
-                          address={wallet}
+                          address={address}
                           // provider={provider} // optional
                           // graphApiKey={apiKey} // optional
                           generatedAvatarType="jazzicon" // optional, 'jazzicon' or 'blockies'
