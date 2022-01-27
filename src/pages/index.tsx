@@ -18,7 +18,7 @@ export default function Home() {
     useMoralis();
 
   const call = async () => {
-    console.log("Calling");
+    // console.log("Calling");
 
     const readOptions = {
       contractAddress: LIBRARY_CONTRACT,

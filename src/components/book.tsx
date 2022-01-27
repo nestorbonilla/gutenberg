@@ -25,7 +25,7 @@ const hexToDec = (hexString: string) => {
 };
 
 const Book = ({ book_id, action }: Props) => {
-  console.log("Book id in book -> " + book_id);
+  // console.log("Book id in book -> " + book_id);
   const [metadata, setMetadata] = useState<any>();
   const [priceData, setPriceData] = useState<any>();
 
@@ -59,20 +59,20 @@ const Book = ({ book_id, action }: Props) => {
 
     const pinataLink = await Moralis.executeFunction(getMetaData);
 
-    console.log(
-      "executeFunction response in book ?=>" +
-        JSON.stringify(pinataLink, null, 3)
-    );
+    // console.log(
+    //   "executeFunction response in book ?=>" +
+    //     JSON.stringify(pinataLink, null, 3)
+    // );
 
     let { data } = await axios.get(String(pinataLink));
 
-    console.log(data);
+    // console.log(data);
 
     setMetadata(data);
   };
 
   const getLibraryData = async () => {
-    console.log("Calling");
+    // console.log("Calling");
 
     const libraryCall = {
       contractAddress: LIBRARY_CONTRACT,
@@ -83,7 +83,7 @@ const Book = ({ book_id, action }: Props) => {
       },
     };
 
-    // await Moralis.enableWeb3();
+   
     const blob = await Moralis.executeFunction(libraryCall);
 
     console.log(
@@ -96,7 +96,7 @@ const Book = ({ book_id, action }: Props) => {
 
   const makeCalls = async () => {
     console.log("Getting -> " + book_id);
-    // await Moralis.enableWeb3();
+    
     getMetaData();
     getLibraryData(); 
   }

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { CurrencyDollarIcon, GlobeIcon } from "@heroicons/react/outline";
 import MarketingLayout from "./marketingLayout";
-import { nft_book } from "../types/mockMetadata";
 import BookList from "./bookList";
-import {
-  useMoralis
-} from "react-moralis";
-import { abi } from "../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
+import { useMoralis } from "react-moralis";
+
 import axios from "axios";
 import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../utils/addresses";
+
+import Genesis from "../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
+import Library from "../../artifacts/contracts/Library.sol/Library.json";
 
 const policies = [
   {
@@ -24,45 +24,82 @@ const policies = [
 ];
 
 type Props = {
-  book: nft_book;
+  book_id: number;
   erc721: boolean;
   callback: () => {};
 };
 
-const ProductView = ({ book, erc721, callback }: Props) => {
+const hexToDec = (hexString: string) => {
+  return parseInt(hexString, 16);
+};
 
-  const [meta, setMeta] = useState<any>(false);
+const ProductView = ({ book_id, erc721, callback }: Props) => {
+  console.log("Book id in book -> " + book_id);
+  const [metadata, setMetadata] = useState<any>();
+  const [priceData, setPriceData] = useState<any>();
 
   const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
     useMoralis();
 
-  const call = async () => {
+  const getMetaData = async () => {
     console.log("Calling");
 
-    const readOptions = {
-      contractAddress: LIBRARY_CONTRACT,
-      functionName: "fetchBook",
-      abi,
+    const getMetaData = {
+      contractAddress: GENESIS_ADDRESS,
+      functionName: "uri",
+      abi: Genesis.abi,
       params: {
-        _tokenId: 1,
+        _tokenId: book_id,
       },
     };
 
-    // await Moralis.enableWeb3();
-    const pinataLink = await Moralis.executeFunction(readOptions);
+    const pinataLink = await Moralis.executeFunction(getMetaData);
 
-    console.log("executeFunction respone ?=>" + pinataLink);
+    console.log(
+      "executeFunction response in book ?=>" +
+        JSON.stringify(pinataLink, null, 3)
+    );
 
     let { data } = await axios.get(String(pinataLink));
 
     console.log(data);
 
-    setMeta(data);
+    setMetadata(data);
+  };
+
+  const getLibraryData = async () => {
+    console.log("Calling");
+
+    const libraryCall = {
+      contractAddress: LIBRARY_CONTRACT,
+      functionName: "fetchBook",
+      abi: Library.abi,
+      params: {
+        bookId: book_id,
+      },
+    };
+
+    const blob: any = await Moralis.executeFunction(libraryCall);
+
+    console.log("blob in productView ?=>" + JSON.stringify(blob, null, 3));
+
+    setPriceData({
+      price: hexToDec(String(blob[6])),
+      units: hexToDec(String(blob[3])),
+      sales: hexToDec(String(blob[7])),
+    });
+  };
+
+  const makeCalls = async () => {
+    console.log("Getting -> " + book_id);
+    await Moralis.enableWeb3();
+    getMetaData();
+    getLibraryData();
   };
 
   useEffect(() => {
     if (isInitialized && isAuthenticated && !isWeb3Enabled) {
-      call();
+      makeCalls();
     }
   }, [isInitialized, isAuthenticated, isWeb3Enabled]);
 
@@ -101,10 +138,11 @@ const ProductView = ({ book, erc721, callback }: Props) => {
             <div className="lg:col-start-8 lg:col-span-5">
               <div className="flex justify-between">
                 <h1 className="text-xl font-medium text-gray-900">
-                  {meta.name}
+                  {metadata?.name}
                 </h1>
-                <p className="text-xl font-medium rounded-full bg-green-100 text-green-800">
-                  ${meta.price}
+                <p className="text-xl font-medium rounded-full bg-green-100 text-green-800 mx-2">
+                  ${priceData?.price}
+                  {/* {JSON.stringify(priceData)} */}
                 </p>
               </div>
               {/* Reviews */}
@@ -156,7 +194,7 @@ const ProductView = ({ book, erc721, callback }: Props) => {
                 {book.images.map((image) => ( */}
               <img
                 // key={mintBook.image}
-                src={meta.image}
+                src={metadata?.image}
                 // alt={image.imageAlt}
                 className={"lg:col-span-2 lg:row-span-2 rounded-lg"}
               />
@@ -230,7 +268,7 @@ const ProductView = ({ book, erc721, callback }: Props) => {
                   onClick={callback}
                   className="mt-8 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  {erc721 ? "Mint Annotated NFT" : "Buy 456 / 500 Genesis*"}
+                  {/* {erc721 ? "Mint Annotated NFT" : `Buy ${priceData.sales} / ${priceData?.units} Genesis`} */}
                 </button>
               </form>
 
@@ -293,7 +331,7 @@ const ProductView = ({ book, erc721, callback }: Props) => {
         </div>
       </div>
       {/* </div> */}
-      <BookList hash={book.hash} />
+      {/* <BookList hash={book.hash} /> */}
     </MarketingLayout>
   );
 };
