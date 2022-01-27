@@ -11,6 +11,8 @@ export interface Toc {
 
 export interface Highlight {
   objectId: string;
+  // either an ERC1155 or ERC721 token ID
+  bookId: string;
   text: string;
   cfiRange: string;
   notes?: string;
@@ -23,6 +25,11 @@ export interface Highlight {
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
 }
+
+const tabs = [
+  { name: 'My Marks', href: '#', current: true },
+  { name: 'Others\' Marks', href: '#', current: false },
+]
 
 interface RightSliderProps {
   toc: Toc[];
@@ -63,7 +70,7 @@ export default function RightSlider(props: RightSliderProps) {
                 <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
                   <div className="p-6">
                     <div className="flex items-start justify-between">
-                      <Dialog.Title className="text-lg font-medium text-gray-900">Highlights</Dialog.Title>
+                      <Dialog.Title className="text-lg font-medium text-gray-900">Notebook</Dialog.Title>
                       <div className="ml-3 h-7 flex items-center">
                         <button
                           type="button"
@@ -76,7 +83,26 @@ export default function RightSlider(props: RightSliderProps) {
                       </div>
                     </div>
                   </div>
-                  <div className="border-b border-gray-200" />
+                  <div className="border-b border-gray-200">
+                    <div className="px-6">
+                      <nav className="-mb-px flex space-x-6" x-descriptions="Tab component">
+                        {tabs.map((tab) => (
+                          <a
+                            key={tab.name}
+                            href={tab.href}
+                            className={classNames(
+                              tab.current
+                                ? 'border-indigo-500 text-indigo-600'
+                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                              'whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm'
+                            )}
+                          >
+                            {tab.name}
+                          </a>
+                        ))}
+                      </nav>
+                    </div>
+                  </div>
                   <ul role="list" className="divide-y divide-gray-200">
                     {props.toc
                       .filter(chapter => groupedHighlights[chapter.href])
