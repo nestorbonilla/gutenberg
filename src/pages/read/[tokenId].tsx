@@ -35,7 +35,10 @@ const Reader: NextPage = () => {
         chain: "mumbai",
       };
       const tokenMetadataRes = await Moralis.Web3API.token.getTokenIdMetadata(options);
-      setTokenMetadata(JSON.parse(tokenMetadataRes.metadata as string));
+      if (tokenMetadataRes.metadata) {
+        setTokenMetadata(JSON.parse(tokenMetadataRes.metadata as string));
+      } else {
+      }
 
       // load previously saved highlights
       const user: any = Moralis.User.current();
@@ -52,7 +55,7 @@ const Reader: NextPage = () => {
   }, [tokenId])
 
   useEffect(() => {
-    if (renditionRef.current) {
+    if (renditionRef.current && tocRef.current) {
       renditionRef.current.on("selected", saveHighlight)
       return () => {
         renditionRef.current!.off("selected", saveHighlight)
@@ -62,7 +65,7 @@ const Reader: NextPage = () => {
 
   async function saveHighlight(cfiRange: string, contents: any) {
     const { href } = renditionRef.current!.location.start;
-    const chapter = tocRef.current!.find((item: any) => item.href === href);
+    const chapter = tocRef.current!.find((item: any) => item.href.startsWith(href));
     const highlightInput = {
       address,
       bookId: tokenId,
