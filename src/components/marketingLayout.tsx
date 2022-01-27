@@ -16,19 +16,28 @@ const navigation = [
 const MarketingLayout = ({ children }: any) => {
   const { isAuthenticated, authenticate, user } = useMoralis();
   const [wallet, setWallet] = useState<any>(false);
-  
+
+  const formatAndSaveWallet = (address: string) => {
+    let concat =
+      address.substring(0, 6) +
+      "..." +
+      address.substring(address.length - 4, address.length);
+    setWallet(concat);
+  };
+
   const connectWallet = async () => {
     if (!isAuthenticated) {
-      await authenticate({ signingMessage: "Authorize linking of your wallet" });
+      await authenticate({
+        signingMessage: "Authorize linking of your wallet",
+      });
     }
   };
 
   useEffect(() => {
     if (user) {
-      setWallet(user.get("ethAddress"))
+      formatAndSaveWallet(user.get("ethAddress"));
     }
   }, [user]);
-
 
   return (
     <div className="relative bg-gray-50 overflow-hidden min-h-screen">
@@ -147,13 +156,19 @@ const MarketingLayout = ({ children }: any) => {
                     className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
                   >
                     {wallet ? (
-                      <Davatar
-                        size={24}
-                        address={wallet}
-                        // provider={provider} // optional
-                        // graphApiKey={apiKey} // optional
-                        generatedAvatarType="jazzicon" // optional, 'jazzicon' or 'blockies'
-                      />
+                      <div className="space-x-2 flex flex-row">
+                        <Davatar
+                          size={24}
+                          address={wallet}
+                          // provider={provider} // optional
+                          // graphApiKey={apiKey} // optional
+                          generatedAvatarType="jazzicon" // optional, 'jazzicon' or 'blockies'
+                        />
+                        <div>
+                        {wallet}
+                        </div>
+                      
+                      </div>
                     ) : (
                       "Connect Wallet"
                     )}
