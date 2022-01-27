@@ -13,7 +13,8 @@ import {
   useApiContract,
   useMoralis,
 } from "react-moralis";
-import GenesisABI from "../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
+import { abi } from "../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
+
 const policies = [
   {
     name: "Share with friends",
@@ -36,12 +37,13 @@ type Props = {
 
 const ProductView = ({ book, erc721, callback }: Props) => {
   const [mintBook, setMintBook] = useState<nft_book>(book);
-  const { Moralis } = useMoralis();
+
+  const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
+    useMoralis();
 
   const { data, error, runContractFunction, isFetching, isLoading } =
     useApiContract({
-      abi: GenesisABI,
-      chain: "mumbai",
+      abi,
       address: "0x762901CA5eE5ee185A2E1Cf41Ea850bC9CE28401",
       functionName: "uri",
       params: {
@@ -56,14 +58,14 @@ const ProductView = ({ book, erc721, callback }: Props) => {
 
   useEffect(() => {
     console.log("Data?=>" + data);
-  }, [data]);
+    console.log("Error?=>" + error);
+  }, [data, error]);
 
   const call = async () => {
     const readOptions = {
       contractAddress: "0x762901CA5eE5ee185A2E1Cf41Ea850bC9CE28401",
       functionName: "uri",
-      abi: GenesisABI,
-      chain: "mumbai",
+      abi,
       params: {
         _tokenId: 1,
       },
@@ -71,11 +73,15 @@ const ProductView = ({ book, erc721, callback }: Props) => {
 
     await Moralis.enableWeb3();
     const message = await Moralis.executeFunction(readOptions);
+
     console.log(message);
   };
+
   useEffect(() => {
-    call();
-  }, []);
+    if (isInitialized && isAuthenticated && !isWeb3Enabled) {
+      call();
+    }
+  }, [isInitialized, isAuthenticated, isWeb3Enabled]);
 
   return (
     <MarketingLayout>

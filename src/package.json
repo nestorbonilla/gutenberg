@@ -5,14 +5,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "update-types": "npx openapi-typescript https://qexoogbqjgjsjupjwxhe.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNjQzMDY2NDQyLCJleHAiOjE5NTg2NDI0NDJ9.CSd-FHtNqdeRPqw9sii7_zvBkOnqMFkPb1J0_SsADM4 --output types/supabase.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@davatar/react": "^1.8.1",
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.5",
-    "@supabase/supabase-js": "^1.29.4",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.4.0",
     "@tailwindcss/typography": "^0.5.0",

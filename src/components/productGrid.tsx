@@ -12,24 +12,24 @@ type Props = {
 const ProductGrid = ({ books, action }: Props) => {
   const [nfts, setNfts] = useState<any>(books);
 
-  // const getBookMetadata = async () => {
-  // Moralis.start({
-  //   serverUrl: "https://7fqgvttpqukt.usemoralis.com:2053/server",
-  //   appId: "585mUNiZ538xo3FEY7lbXWFZjjFPNxKOvUstjfhc",
-  // });
+  const getBookMetadata = async () => {
+  Moralis.start({
+    serverUrl: "https://7fqgvttpqukt.usemoralis.com:2053/server",
+    appId: "585mUNiZ538xo3FEY7lbXWFZjjFPNxKOvUstjfhc",
+  });
   // BAYC
-  // const options: any = {
-  //   address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
-  //   chain: "eth",
-  // };
-  // const NFTs = await Moralis.Web3API.token.getAllTokenIds(options);
-  // setNfts(NFTs.result);
-  // console.log(NFTs);
-  // };
+  const options: any = {
+    address: "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+    chain: "eth",
+  };
+  const NFTs = await Moralis.Web3API.token.getAllTokenIds(options);
+  setNfts(NFTs.result);
+  console.log(NFTs);
+  };
 
-  // useEffect(() => {
-  //   getBookMetadata();
-  // }, []);
+  useEffect(() => {
+    getBookMetadata();
+  }, []);
 
   return (
     <div className="">

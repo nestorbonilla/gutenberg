@@ -2,6 +2,7 @@ import ProductView from "../../components/productView"
 import { mockBooks } from "../../types/mockMetadata"
 import { useRouter } from 'next/router'
 
+
 const MintERC721 = () => {
     const router = useRouter()
     const { hash } = router.query; 
