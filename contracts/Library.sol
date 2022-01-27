@@ -176,6 +176,11 @@ contract Library is ReentrancyGuard, ERC721Holder, ERC1155Holder {
         }
     }
 
+    /* Returns a specific library book */
+    function fetchBook(uint256 bookId) public view returns (Book memory) {
+        return idToBook[bookId];
+    }
+
     /* Returns all unsold library books */
     function fetchBooks() public view returns (Book[] memory) {
         uint256 bookCount = _bookIds.current();
