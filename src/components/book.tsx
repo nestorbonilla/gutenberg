@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { nft_book } from "../types/mockMetadata";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { abi } from "../../artifacts/contracts/Library.sol/Library.json";
+import Genesis from "../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
+import Library from "../../artifacts/contracts/Library.sol/Library.json";
+
 import axios from "axios";
-import { LIBRARY_CONTRACT } from "../utils/addresses";
+import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../utils/addresses";
 
 export enum Action {
   mintERC721 = "mintER721",
@@ -15,7 +16,7 @@ export enum Action {
 }
 
 type Props = {
-  book: any;
+  book_id: number; 
   action: Action;
 };
 
@@ -23,10 +24,10 @@ const hexToDec = (hexString: string) => {
   return parseInt(hexString, 16);
 };
 
-const Book = ({ book, action }: Props) => {
-  const { price, bookId, sales, tokenId, units } = book;
+const Book = ({ book_id, action }: Props) => {
 
-  const [meta, setMeta] = useState<any>();
+  const [metadata, setMetadata] = useState<any>();
+  const [priceData, setPriceData] = useState<any>();
 
   const link = (link: string) => {
     switch (action) {
@@ -44,55 +45,86 @@ const Book = ({ book, action }: Props) => {
   const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
     useMoralis();
 
-  const call = async () => {
+  const getMetaData = async () => {
     console.log("Calling");
 
-    const readOptions = {
+    const getMetaData = {
+      contractAddress: GENESIS_ADDRESS,
+      functionName: "uri",
+      abi: Genesis.abi,
+      params: {
+        _tokenId: book_id,
+      },
+    };
+
+    const pinataLink = await Moralis.executeFunction(getMetaData);
+
+    console.log(
+      "executeFunction respone in book ?=>" +
+        JSON.stringify(pinataLink, null, 3)
+    );
+
+    let { data } = await axios.get(String(pinataLink));
+
+    console.log(data);
+
+    setMetadata(data);
+  };
+
+  const getLibraryData = async () => {
+    console.log("Calling");
+
+    const libraryCall = {
       contractAddress: LIBRARY_CONTRACT,
       functionName: "fetchBook",
-      abi,
+      abi: Library.abi,
       params: {
-        bookId: hexToDec(bookId._hex),
+        bookId: book_id,
       },
     };
 
     await Moralis.enableWeb3();
-    const pinataLink = await Moralis.executeFunction(readOptions);
+    const blob = await Moralis.executeFunction(libraryCall);
 
-    console.log("executeFunction respone in book ?=>" + JSON.stringify(pinataLink));
+    console.log(
+      "executeFunction respone from library ?=>" +
+        JSON.stringify(blob, null, 3)
+    );
 
-    // let { data } = await axios.get(String(pinataLink));
-
-    // console.log(data);
-
-    // setMeta(data);
+    setPriceData(blob);
   };
+
+  const makeCalls = async () => {
+    console.log("Getting -> " + book_id);
+    await Moralis.enableWeb3();
+    getMetaData();
+    getLibraryData(); 
+  }
 
   useEffect(() => {
     if (isInitialized && isAuthenticated && !isWeb3Enabled) {
-      console.log("Getting -> " + bookId);
-      call();
+      makeCalls();
     }
   }, [isInitialized, isAuthenticated, isWeb3Enabled]);
 
   return (
-    <div key={book.ipfs_url} className="group relative">
+    <div key={metadata?.ipfs_url} className="group relative">
       <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-        {/* <img
-          src={book.image}
+        <img
+          src={metadata?.image}
           // alt={book.description}
           className="w-full h-full object-center object-cover lg:w-full lg:h-full"
-        /> */}
+        />
       </div>
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-700">
-            {/* <Link href={}>
+            <Link href={link(String(book_id))}>
               <a>
                 <span aria-hidden="true" className="absolute inset-0" />
-                {book.name}
+                {metadata?.name}
               </a>
-            </Link> */}
+            </Link>
           </h3>
           {/* <p className="mt-1 text-sm text-gray-500">{book.authors}</p> */}
         </div>

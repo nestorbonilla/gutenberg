@@ -18,10 +18,9 @@ const Libarary = () => {
         }
     }, [])
 
-
     return (
         <MarketingLayout>
-            <ProductGrid books={[mockBooks[0], mockBooks[2]]} action={Action.read} />
+            <ProductGrid books={[]} action={Action.read} />
         </MarketingLayout>
     )
 }
