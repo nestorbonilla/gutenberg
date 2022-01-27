@@ -1,0 +1,4 @@
+[build]
+base = "src/"
+publish = "gutemberg-static/"
+command = "yarn build"

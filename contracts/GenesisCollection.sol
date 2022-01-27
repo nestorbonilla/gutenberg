@@ -43,7 +43,13 @@ contract GenesisCollection is ERC1155, Ownable {
     {
         return
             string(
-                abi.encodePacked(baseUri, Strings.toString(_tokenId), ".json")
+                abi.encodePacked(
+                    baseUri,
+                    ipfsFolderHash,
+                    "/book_",
+                    Strings.toString(_tokenId),
+                    ".json"
+                )
             );
     }
 }

@@ -18,7 +18,7 @@ async function main() {
 
   console.log("Genesis Collection contract was deployed to: ", genesisCollection.address);
 
-  await genesisCollection.mint(10);
+  await genesisCollection.connect(author).mint(10);
 
   console.log("Genesis Collection successfully minted");
 
