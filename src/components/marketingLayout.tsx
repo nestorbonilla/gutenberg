@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import Moralis from "moralis";
 import { useMoralis } from "react-moralis";
 import Link from "next/link";
 import Davatar from "@davatar/react";

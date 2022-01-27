@@ -28,38 +28,35 @@ const policies = [
 ];
 
 const MintERC721 = () => {
+  const [mintBook, setMintBook] = useState<nft_book>(mockBooks[0]);
+  const router = useRouter();
+  const { address } = router.query;
 
-    const [mintBook, setMintBook] = useState<nft_book>(mockBooks[0]);
-    const router = useRouter();
-    const { address } = router.query;
+  const mint = () => {
+    // const { data, error, fetch, isFetching, isLoading } =
+    //   useWeb3ExecuteFunction({
+    //     abi,
+    //     contractAddress: "0x762901CA5eE5ee185A2E1Cf41Ea850bC9CE28401", //bad addres
+    //     functionName: "mint",
+    //     params: {
+    //       // secondsAgos: [0, 10],
+    //     },
+    //   });
+  };
 
-    const mint = () => {
-      const { data, error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction({
-        abi,
-        contractAddress: 'WRONGADDRESS_0x762901CA5eE5ee185A2E1Cf41Ea850bC9CE28401',
-        functionName: "mint",
-        params: {
-          // secondsAgos: [0, 10],
-        },
-      });
-        
+  const fetchweb2Metadata = async () => {
+    //todo fetch data from moralis
+  };
+
+  useEffect(() => {
+    if (address) {
+      fetchweb2Metadata();
     }
-
-    const fetchweb2Metadata = async () => {
-        //todo fetch data from moralis
-    }
-
-    useEffect(() => {
-        if (address) {
-            fetchweb2Metadata();
-        }
-
-    }, [address]);
+  }, [address]);
 
   return (
     <MarketingLayout>
       <div className="pt-6 pb-16 sm:pb-24">
-
         <div className="mt-8 max-w-2xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-cols-12 lg:auto-rows-min lg:gap-x-8">
             <div className="lg:col-start-8 lg:col-span-5">
@@ -132,13 +129,13 @@ const MintERC721 = () => {
               <form>
                 {/* Annotations */}
                 {/* {erc721 ? ( */}
-                  <div>
-                    <h2 className="text-md font-medium text-gray-900 mb-5 ">
-                      My Annotations:{" "}
-                    </h2>
-                    {/* My Annotations Meta data */}
-                    {/* <Annotationer annotation={book.annotations} /> */}
-                  </div>
+                <div>
+                  <h2 className="text-md font-medium text-gray-900 mb-5 ">
+                    My Annotations:{" "}
+                  </h2>
+                  {/* My Annotations Meta data */}
+                  {/* <Annotationer annotation={book.annotations} /> */}
+                </div>
                 {/* ) : null} */}
 
                 {/* Size picker */}
@@ -264,4 +261,3 @@ const MintERC721 = () => {
 };
 
 export default MintERC721;
- 
