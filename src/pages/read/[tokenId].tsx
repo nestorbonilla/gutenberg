@@ -2,31 +2,54 @@ import { MenuIcon } from "@heroicons/react/outline";
 import { Rendition } from "epubjs";
 import Moralis from 'moralis';
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { ReactReader } from "react-reader";
-import RightSlider, { Highlight } from "../components/rightSlider";
+import RightSlider, { Highlight } from "../../components/rightSlider";
 // import styles from '../styles/Home.module.css'
 
 const Reader: NextPage = () => {
+  const router = useRouter();
+  const { tokenId } = router.query;
+  const [tokenMetadata, setTokenMetadata] = useState<any>();
+  const [address, setAddress] = useState<string>();
+
   const [showHighlights, setShowHighlights] = useState(false);
   const [location, setLocation] = useState<string>();
   const [highlights, setHighlights] = useState<Highlight[]>([]);
-  const [address, setAddress] = useState<string>();
+
   const renditionRef = useRef<Rendition>();
   const tocRef = useRef<any>();
   const MoralisHighlight = Moralis.Object.extend("Highlight");
 
   useEffect(() => {
-    // load previously saved highlights
-    const user: any = Moralis.User.current();
-    setAddress(user.get("ethAddress"));
-    new Moralis.Query(MoralisHighlight)
-      .equalTo("address", user.get("ethAddress"))
-      .find()
-      .then((results) => {
-        setHighlights(results.map(result => result.toJSON() as unknown as Highlight));
-      });
-  }, [])
+    async function init() {
+      if (!tokenId) {
+        return;
+      }
+
+      // load epub URL
+      const options: any = {
+        address: "0x783dA6C07ca303a25576409254dC26f6B66Fa66B",
+        token_id: tokenId,
+        chain: "mumbai",
+      };
+      const tokenMetadataRes = await Moralis.Web3API.token.getTokenIdMetadata(options);
+      setTokenMetadata(JSON.parse(tokenMetadataRes.metadata as string));
+
+      // load previously saved highlights
+      const user: any = Moralis.User.current();
+      setAddress(user.get("ethAddress"));
+      new Moralis.Query(MoralisHighlight)
+        .equalTo("address", user.get("ethAddress"))
+        .equalTo("bookId", tokenId)
+        .find()
+        .then((results) => {
+          setHighlights(results.map(result => result.toJSON() as unknown as Highlight));
+        });
+    }
+    init();
+  }, [tokenId])
 
   useEffect(() => {
     if (renditionRef.current) {
@@ -42,6 +65,7 @@ const Reader: NextPage = () => {
     const chapter = tocRef.current!.find((item: any) => item.href === href);
     const highlightInput = {
       address,
+      bookId: tokenId,
       text: renditionRef.current!.getRange(cfiRange).toString(),
       cfiRange,
       chapter,
@@ -80,15 +104,16 @@ const Reader: NextPage = () => {
 
   return (
     <div>
-      <div className="m" style={{ height: "100vh" }}>
+      {tokenMetadata && tokenMetadata.book_url && <div className="m" style={{ height: "100vh" }}>
         <ReactReader
           location={location}
           locationChanged={locationChanged}
           getRendition={getRendition}
           tocChanged={toc => tocRef.current = toc}
-          url="https://gerhardsletten.github.io/react-reader/files/alice.epub"
+          url={tokenMetadata.book_url}
+          epubInitOptions={{ openAs: "epub" }}
         />
-      </div>
+      </div>}
       {!showHighlights && <button
         type="button"
         className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500"
