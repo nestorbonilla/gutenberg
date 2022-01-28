@@ -13,7 +13,7 @@ async function main() {
   console.log("Library contract was deployed to: ", library.address);
 
   const GenesisCollection = await ethers.getContractFactory("GenesisCollection");
-  const genesisCollection = await GenesisCollection.connect(author).deploy("Genesis", "BOOK", "https://gateway.pinata.cloud/ipfs/", "QmQi9KooqR8wEwPsxuGdacG7wTFVDF5oBNobKSTzcrDF9Q", library.address); // name, symbol, baseUri, ipfsFolderHash, libraryAddress
+  const genesisCollection = await GenesisCollection.connect(author).deploy("Genesis", "BOOK", "https://gateway.pinata.cloud/ipfs/", "QmR8ZZkbFgpSMRSB28NCPEscWujnaWwj4MZEqGmjZXDUqw", library.address); // name, symbol, baseUri, ipfsFolderHash, libraryAddress
   await genesisCollection.deployed();
 
   console.log("Genesis Collection contract was deployed to: ", genesisCollection.address);
@@ -22,6 +22,8 @@ async function main() {
   await genesisCollection.connect(author).mint(200);
   await genesisCollection.connect(author).mint(500);
   await genesisCollection.connect(author).mint(700);
+  await genesisCollection.connect(author).mint(350);
+  await genesisCollection.connect(author).mint(800);
 
   console.log("Genesis Collection successfully minted");
 
@@ -29,6 +31,8 @@ async function main() {
   await library.connect(author).createSemiFungibleBook(genesisCollection.address, 2, 0, 200);
   await library.connect(author).createSemiFungibleBook(genesisCollection.address, 3, 0, 500);
   await library.connect(author).createSemiFungibleBook(genesisCollection.address, 4, 0, 700);
+  await library.connect(author).createSemiFungibleBook(genesisCollection.address, 5, 0, 350);
+  await library.connect(author).createSemiFungibleBook(genesisCollection.address, 6, 0, 800);
 
   console.log("Book created at Library");
 

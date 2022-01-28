@@ -1,0 +1,17 @@
+{
+    "name": "Flatland",
+    "description": "This masterpiece of science (and mathematical) fiction is a delightfully unique and highly entertaining satire that has charmed readers for more than 100 years.",
+    "image": "https://gateway.pinata.cloud/ipfs/QmdoiVRiTnu2CSnwkxubBvzWPLjU2yRVam8RYsJeZvVdnV",
+    "book_url": "https://gateway.pinata.cloud/ipfs/QmPABGjReDi1su4mm9qMF9eqPzmNP1QzPDGx6NtfrYRGom",
+    "attributes": [
+        {
+            "trait_type": "author", 
+            "value": "Abbott, Edwin Abbott"
+        },
+        {
+            "display_type": "date", 
+            "trait_type": "published", 
+            "value": 788936400
+        }
+    ]
+}
