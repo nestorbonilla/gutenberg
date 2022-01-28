@@ -8,7 +8,6 @@ import Library from "../../../artifacts/contracts/Library.sol/Library.json";
 import MarketingLayout from "../../components/marketingLayout";
 import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../../utils/addresses";
 
-
 const policies = [
   {
     name: "Share with friends",
@@ -56,7 +55,10 @@ const ProductView = ({ erc721, parentCall }: Props) => {
     const blob: any = await Moralis.executeFunction(libraryCall);
 
     console.log("Blob from mint ?=> " + JSON.stringify(blob, null, 3));
+
     setLoading(false);
+
+    router.push("/library");
   };
 
   const getMetaData = async () => {
@@ -75,7 +77,7 @@ const ProductView = ({ erc721, parentCall }: Props) => {
 
     console.log(
       "executeFunction response in book ?=>" +
-      JSON.stringify(pinataLink, null, 3)
+        JSON.stringify(pinataLink, null, 3)
     );
 
     let { data } = await axios.get(String(pinataLink));
@@ -188,16 +190,23 @@ const ProductView = ({ erc721, parentCall }: Props) => {
                     {/* <Annotationer annotation={book.annotations} /> */}
                   </div>
                 ) : null}
-
+                {/* description */}
+                <div className="flex justify-between">
+                  <p className="text-md text-gray-200">
+                    {metadata?.description}
+                  </p>
+                </div>
                 <a
                   onClick={buy}
                   className="mt-8 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   {`Buy ${priceData?.sales + 1} / ${priceData?.units} Genesis`}
-                  {loading && <div
-                    style={{ borderTopColor: "transparent" }}
-                    className="ml-2 w-6 h-6 border-2 border-white border-solid rounded-full animate-spin"
-                  />}
+                  {loading && (
+                    <div
+                      style={{ borderTopColor: "transparent" }}
+                      className="ml-2 w-6 h-6 border-2 border-white border-solid rounded-full animate-spin"
+                    />
+                  )}
                 </a>
               </form>
 

@@ -11,7 +11,9 @@ import Secondary from "../../../artifacts/contracts/SecondaryCollection.sol/Seco
 import MarketingLayout from "../../components/marketingLayout";
 import { Highlight } from "../../components/rightSlider";
 import {
-  GENESIS_ADDRESS, LIBRARY_CONTRACT, SECONDARY_ADDRESS
+  GENESIS_ADDRESS,
+  LIBRARY_CONTRACT,
+  SECONDARY_ADDRESS,
 } from "../../utils/addresses";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0" as any);
@@ -36,13 +38,13 @@ const MintERC721 = () => {
   const [priceData, setPriceData] = useState<any>();
   const [minting, setMinting] = useState(false);
 
-  const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } = useMoralis();
+  const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
+    useMoralis();
 
   const [highlights, setHighlights] = useState<Highlight[]>();
   const MoralisHighlight = Moralis.Object.extend("Highlight");
 
   const mint = async () => {
-
     setMinting(true);
 
     const freshdata = { ...metadata, address, highlights };
@@ -181,25 +183,32 @@ const MintERC721 = () => {
 
             <div className="mt-8 lg:col-span-5">
               <form>
-                <div>
-                  <h2 className="text-md font-medium text-gray-200 mb-5 ">
+                <div className="flex">
+                  <div className="text-md font-medium text-gray-200 mb-5 rounded-md border-2 px-2 border-green-300">
                     {highlights?.length}
                     {highlights?.length === 1 ? " Annotation" : " Annotations"}
-                  </h2>
+                  </div>
                   {/* My Annotations Meta data */}
                   {/* <Annotationer annotation={book.annotations} /> */}
                 </div>
                 {/* ) : null} */}
-
+                {/* description */}
+                <div className="flex justify-between">
+                  <p className="text-md text-gray-200">
+                    {metadata?.description}
+                  </p>
+                </div>
                 <a
                   onClick={mint}
                   className="mt-8 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Mint Annotated NFT
-                  {minting && <div
-                    style={{ borderTopColor: "transparent" }}
-                    className="ml-2 w-6 h-6 border-2 border-white border-solid rounded-full animate-spin"
-                  />}
+                  {minting && (
+                    <div
+                      style={{ borderTopColor: "transparent" }}
+                      className="ml-2 w-6 h-6 border-2 border-white border-solid rounded-full animate-spin"
+                    />
+                  )}
                 </a>
               </form>
 
