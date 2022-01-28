@@ -1,14 +1,13 @@
-// import { StarIcon } from "@heroicons/react/solid";
-// import { RadioGroup } from "@headlessui/react";
 import { CurrencyDollarIcon, GlobeIcon } from "@heroicons/react/outline";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import Moralis from "moralis";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Secondary from "../../../artifacts/contracts/SecondaryCollection.sol/SecondaryCollection.json";
+import Library from "../../../artifacts/contracts/Library.sol/Library.json";
 import MarketingLayout from "../../components/marketingLayout";
 import { Highlight } from "../../components/rightSlider";
-import { SECONDARY_ADDRESS } from "../../utils/addresses";
+import { SECONDARY_ADDRESS, LIBRARY_CONTRACT } from "../../utils/addresses";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0" as any);
 const policies = [
@@ -39,7 +38,7 @@ const MintERC721 = () => {
     const metadataResult = await client.add(JSON.stringify(metadata));
     const url = `https://ipfs.infura.io/ipfs/${metadataResult.path}`;
     console.log("info has been uploaded: ", url);
-    
+
     const mintData = {
       contractAddress: SECONDARY_ADDRESS,
       functionName: "mint",
@@ -51,20 +50,24 @@ const MintERC721 = () => {
     const transaction = await Moralis.executeFunction(mintData);
     // @ts-ignore
     const result = await transaction.wait();
-    console.log(result);
-    /*const libraryData = {
+    console.log(result, null, 3);
+
+    let newBookId = Number(result?.events[0].args.tokenId["_hex"]);
+    console.log(newBookId);
+    const libraryData = {
       contractAddress: LIBRARY_CONTRACT,
       functionName: "createNonFungibleBook",
-      abi: Library.abi,
+      abi: Library.abi, 
       params: {
         nftContract: LIBRARY_CONTRACT,
         tokenId: newBookId,
         price: 10,
       },
     };
-    await Moralis.executeFunction(libraryData);*/
+    await Moralis.executeFunction(libraryData);
   };
 
+  
   useEffect(() => {
     async function init() {
       Moralis.enableWeb3();
@@ -72,13 +75,15 @@ const MintERC721 = () => {
         return;
       }
 
-      // load epub URL
       const options: any = {
         address: "0x783dA6C07ca303a25576409254dC26f6B66Fa66B",
         token_id: tokenId,
         chain: "mumbai",
       };
-      const tokenMetadataRes = await Moralis.Web3API.token.getTokenIdMetadata(options);
+      
+      const tokenMetadataRes = await Moralis.Web3API.token.getTokenIdMetadata(
+        options
+      );
       if (tokenMetadataRes.metadata) {
         setMintBook(JSON.parse(tokenMetadataRes.metadata as string));
       } else {
@@ -92,11 +97,13 @@ const MintERC721 = () => {
         .equalTo("bookId", tokenId)
         .find()
         .then((results) => {
-          setHighlights(results.map(result => result.toJSON() as unknown as Highlight));
+          setHighlights(
+            results.map((result) => result.toJSON() as unknown as Highlight)
+          );
         });
     }
     init();
-  }, [tokenId])
+  }, [tokenId]);
 
   return (
     <MarketingLayout>
@@ -117,10 +124,12 @@ const MintERC721 = () => {
             <div className="mt-8 lg:mt-0 lg:col-start-1 lg:col-span-7 lg:row-start-1 lg:row-span-3">
               <h2 className="sr-only">Images</h2>
 
-              {mintBook && <img
-                src={mintBook.image}
-                className={"lg:col-span-2 lg:row-span-2 rounded-lg"}
-              />}
+              {mintBook && (
+                <img
+                  src={mintBook.image}
+                  className={"lg:col-span-2 lg:row-span-2 rounded-lg"}
+                />
+              )}
             </div>
 
             <div className="mt-8 lg:col-span-5">
@@ -200,7 +209,7 @@ const MintERC721 = () => {
           </div>
         </div>
       </div>
-                  
+
       {/* </div> */}
       {/* <BookList hash={book.hash} /> */}
     </MarketingLayout>
