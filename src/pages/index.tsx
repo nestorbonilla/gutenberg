@@ -3,7 +3,7 @@ import ProdcutGrid from "../components/productGrid";
 import MarketingLayout from "../components/marketingLayout";
 import LandingHeader from "../components/landingHeader";
 import { Action } from "../components/book";
-import { LIBRARY_CONTRACT } from "../utils/addresses";
+import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../utils/addresses";
 import { abi } from "../../artifacts/contracts/Library.sol/Library.json";
 import { useMoralis } from "react-moralis";
 
@@ -25,13 +25,16 @@ export default function Home() {
 
     const data = JSON.stringify(originalData);
     const parsedData = JSON.parse(data);
-    // console.log("PARSED DATA");
-    // console.log(parsedData);
+    console.log("PARSED DATA");
+    console.log(parsedData);
 
     let book_datas: any[] = [];
 
     parsedData.forEach((item: any) => {
-      book_datas.push({ id: Number(item[0].hex), contract: item[1] });
+      //only show genesis erc721 on home page for now.
+      if (item[1] === GENESIS_ADDRESS) {
+        book_datas.push({ id: Number(item[2].hex), contract: item[1] });
+      }
     });
 
     // console.log("book_datas => " + JSON.stringify(book_datas, null, 3));
@@ -48,9 +51,7 @@ export default function Home() {
   return (
     <MarketingLayout>
       <LandingHeader />
-      {books ? (
-        <ProdcutGrid books={books} action={Action.buyERC1155} />
-      ) : null}
+      {books ? <ProdcutGrid books={books} action={Action.buyERC1155} /> : null}
     </MarketingLayout>
   );
 }
