@@ -26,10 +26,8 @@ const policies = [
 type Props = {
   book_id: number;
   erc721: boolean;
-  callback: () => {};
+  callback: () => void; 
 };
-
-
 
 const ProductView = ({ book_id, erc721, callback }: Props) => {
   console.log("Book id in book -> " + book_id);
@@ -61,12 +59,12 @@ const ProductView = ({ book_id, erc721, callback }: Props) => {
     let { data } = await axios.get(String(pinataLink));
 
     console.log(data);
-
+    
     setMetadata(data);
+
   };
 
   const getLibraryData = async () => {
-
     console.log("Calling");
 
     const libraryCall = {
@@ -264,7 +262,7 @@ const ProductView = ({ book_id, erc721, callback }: Props) => {
                 </div>
 
                 <button
-                  onClick={callback}
+                  onClick={() => callback()}
                   className="mt-8 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   {erc721

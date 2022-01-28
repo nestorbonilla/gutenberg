@@ -12,6 +12,7 @@ import {
   useApiContract,
   useMoralis,
 } from "react-moralis";
+
 import { abi } from "../../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
 
 const policies = [
@@ -49,10 +50,10 @@ const MintERC721 = () => {
   };
 
   useEffect(() => {
-    if (address) {
+    if (hash) {
       fetchweb2Metadata();
     }
-  }, [address]);
+  }, [hash]);
 
   return (
     <MarketingLayout>
