@@ -41,7 +41,7 @@ const MarketingLayout = ({ children }: any) => {
   }, [user]);
 
   return (
-    <div className="relative bg-gray-50 overflow-hidden min-h-screen">
+    <div className="relative bg-black overflow-hidden min-h-screen">
       <div
         className="hidden sm:block sm:absolute sm:inset-y-0 sm:h-full sm:w-full"
         aria-hidden="true"
@@ -51,7 +51,7 @@ const MarketingLayout = ({ children }: any) => {
             className="absolute right-full transform translate-y-1/4 translate-x-1/4 lg:translate-x-1/2"
             width={404}
             height={784}
-            fill="none"
+            fill="non"
             viewBox="0 0 404 784"
           >
             <defs>
@@ -68,7 +68,7 @@ const MarketingLayout = ({ children }: any) => {
                   y={0}
                   width={4}
                   height={4}
-                  className="text-gray-200"
+                  className="text-green-300 text-opacity-30"
                   fill="currentColor"
                 />
               </pattern>
@@ -100,7 +100,7 @@ const MarketingLayout = ({ children }: any) => {
                   y={0}
                   width={4}
                   height={4}
-                  className="text-gray-200"
+                  className="text-p-300 text-opacity-30"
                   fill="currentColor"
                 />
               </pattern>
@@ -124,17 +124,20 @@ const MarketingLayout = ({ children }: any) => {
               <div className="flex items-center flex-1 md:absolute md:inset-y-0 md:left-0">
                 <div className="flex items-center justify-between w-full md:w-auto">
                   <Link href="/">
-                    <a>
-                      <span className="sr-only">Workflow</span>
+                    <a className="flex flex-row space-x-2">
+                      <span className="sr-only">Gutenburg NFT</span>
                       <img
                         className="h-8 w-auto sm:h-10"
                         src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                         alt=""
                       />
+                      <h1 className="text-3xl font-semibold text-indigo-600">
+                        {"Gutenburg NFT"}
+                      </h1>
                     </a>
                   </Link>
                   <div className="-mr-2 flex items-center md:hidden">
-                    <Popover.Button className="bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                    <Popover.Button className="bg-indigo-600 rounded-md p-2 inline-flex items-center justify-center text-green-200 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                       <span className="sr-only">Open main menu</span>
                       <MenuIcon className="h-6 w-6" aria-hidden="true" />
                     </Popover.Button>
@@ -144,7 +147,7 @@ const MarketingLayout = ({ children }: any) => {
               <div className="hidden md:flex md:space-x-10">
                 {navigation.map((item) => (
                   <Link key={item.name} href={item.href}>
-                    <a className="font-medium text-gray-500 hover:text-gray-900">
+                    <a className="font-medium text-gray-50 hover:text-gray-900">
                       {item.name}
                     </a>
                   </Link>
@@ -154,7 +157,7 @@ const MarketingLayout = ({ children }: any) => {
                 <span className="inline-flex rounded-md shadow">
                   <a
                     onClick={connectWallet}
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-gray-50 hover:text-indigo-600"
                   >
                     {wallet ? (
                       <div className="space-x-2 flex flex-row">
@@ -165,10 +168,7 @@ const MarketingLayout = ({ children }: any) => {
                           // graphApiKey={apiKey} // optional
                           generatedAvatarType="jazzicon" // optional, 'jazzicon' or 'blockies'
                         />
-                        <div>
-                        {wallet}
-                        </div>
-                      
+                        <div>{wallet}</div>
                       </div>
                     ) : (
                       "Connect Wallet"
@@ -219,7 +219,7 @@ const MarketingLayout = ({ children }: any) => {
                 </div>
                 <a
                   onClick={connectWallet}
-                  className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100"
+                  className="block w-full px-5 py-3 text-center font-medium text-green-200 bg-indigo-600 hover:bg-green-200 hover:text-indigo-600"
                 >
                   {wallet ? wallet : "Connect Wallet"}
                 </a>

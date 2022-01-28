@@ -161,10 +161,10 @@ const ProductView = ({ erc721, parentCall }: Props) => {
           <div className="lg:grid lg:grid-cols-12 lg:auto-rows-min lg:gap-x-8">
             <div className="lg:col-start-8 lg:col-span-5">
               <div className="flex justify-between">
-                <h1 className="text-xl font-medium text-gray-900">
+                <h1 className="text-xl font-medium text-gray-200">
                   {metadata?.name}
                 </h1>
-                <p className="text-xl font-medium rounded-full bg-green-100 text-green-800 mx-2">
+                <p className="text-xl font-medium rounded-full bg-green-600 text-green-200 px-5">
                   ${priceData?.price}
                   {/* {JSON.stringify(priceData)} */}
                 </p>
@@ -336,18 +336,18 @@ const ProductView = ({ erc721, parentCall }: Props) => {
                   {policies.map((policy) => (
                     <div
                       key={policy.name}
-                      className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center"
+                      className="bg-black border border-indigo-600 rounded-lg p-6 text-center"
                     >
                       <dt>
                         <policy.icon
-                          className="mx-auto h-6 w-6 flex-shrink-0 text-gray-400"
+                          className="mx-auto h-6 w-6 flex-shrink-0 text-indigo-600"
                           aria-hidden="true"
                         />
-                        <span className="mt-4 text-sm font-medium text-gray-900">
+                        <span className="mt-4 text-sm font-medium text-gray-200">
                           {policy.name}
                         </span>
                       </dt>
-                      <dd className="mt-1 text-sm text-gray-500">
+                      <dd className="mt-1 text-sm text-indigo-200">
                         {policy.description}
                       </dd>
                     </div>

@@ -6,50 +6,53 @@ const people = [
     name: "Carl Lippert",
     role: "Care of Magical Creatures",
     twitterUrl: "https://twitter.com/CarlLippert",
-    imageUrl: "https://pbs.twimg.com/profile_images/1380979602076667904/7NIW3Cyt_400x400.jpg",
+    imageUrl:
+      "https://pbs.twimg.com/profile_images/1380979602076667904/7NIW3Cyt_400x400.jpg",
     linkedinUrl: "https://www.linkedin.com/in/carllippert/",
-    },
-    {
-        name: "Grace Wang",
-        role: "Defense against the Dark Arts",
-        twitterUrl: "https://twitter.com/gracew09",
-        imageUrl: "https://pbs.twimg.com/profile_images/1373073966659637252/LxW45rY7_400x400.jpg",
-        linkedinUrl: "https://www.linkedin.com/in/carllippert/",
-      },
-    {
-        name: "Nestor Bonilla",
-        role: "Keeper of Keys and Grounds",
-        twitterUrl: "https://twitter.com/nestorbonillas",
-        imageUrl: "https://pbs.twimg.com/profile_images/1402718800366116864/FS4OusjQ_400x400.jpg",
-        linkedinUrl: "https://www.linkedin.com/in/nestorbonilla/",
   },
-     {
-      name: "Dalia Katan",
-      role: "",
-      twitterUrl: "https://twitter.com/daliakatan",
-      imageUrl: "https://pbs.twimg.com/profile_images/1476739180189396995/oXgEMno0_400x400.jpg",
-      linkedinUrl: "https://www.linkedin.com/in/nestorbonilla/",
+  {
+    name: "Grace Wang",
+    role: "Defense against the Dark Arts",
+    twitterUrl: "https://twitter.com/gracew09",
+    imageUrl:
+      "https://pbs.twimg.com/profile_images/1373073966659637252/LxW45rY7_400x400.jpg",
+    linkedinUrl: "https://www.linkedin.com/in/carllippert/",
+  },
+  {
+    name: "Nestor Bonilla",
+    role: "Keeper of Keys and Grounds",
+    twitterUrl: "https://twitter.com/nestorbonillas",
+    imageUrl:
+      "https://pbs.twimg.com/profile_images/1402718800366116864/FS4OusjQ_400x400.jpg",
+    linkedinUrl: "https://www.linkedin.com/in/nestorbonilla/",
+  },
+  {
+    name: "Dalia Katan",
+    role: "",
+    twitterUrl: "https://twitter.com/daliakatan",
+    imageUrl:
+      "https://pbs.twimg.com/profile_images/1476739180189396995/oXgEMno0_400x400.jpg",
+    linkedinUrl: "https://www.linkedin.com/in/nestorbonilla/",
   },
   {
     name: "Sonia Joseph",
     role: "",
     twitterUrl: "https://twitter.com/soniajoseph_",
-    imageUrl: "https://pbs.twimg.com/profile_images/1482899147967586312/qUQQ4A29_400x400.jpg",
+    imageUrl:
+      "https://pbs.twimg.com/profile_images/1482899147967586312/qUQQ4A29_400x400.jpg",
     linkedinUrl: "https://www.linkedin.com/in/nestorbonilla/",
-},
-     
-  
+  },
+
   // More people...
 ];
 
 const About = () => {
-    
   return (
     <MarketingLayout>
-      <div className="max-w-7xl mx-auto py-12 px-4 text-center sm:px-6 lg:px-8 lg:py-24">
+      <div className="max-w-7xl mx-auto pb-12 px-4 text-center sm:px-6 lg:px-8 lg:py-24">
         <div className="space-y-12">
           <div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl text-indigo-200 font-extrabold tracking-tight sm:text-4xl">
               Meet our team
             </h2>
             {/* <p className="text-xl text-gray-500">
@@ -60,8 +63,7 @@ const About = () => {
           <ul
             role="list"
             className="mx-auto space-y-16 sm:grid sm:grid-cols-2 sm:gap-16 sm:space-y-0 lg:grid-cols-3 lg:max-w-5xl"
-                  >
-                      
+          >
             {people.map((person) => (
               <li key={person.name}>
                 <div className="space-y-6">
@@ -71,7 +73,7 @@ const About = () => {
                     alt=""
                   />
                   <div className="space-y-2">
-                    <div className="text-lg leading-6 font-medium space-y-1">
+                    <div className="text-lg text-green-200 leading-6 font-medium space-y-1">
                       <h3>{person.name}</h3>
                       <p className="text-indigo-600">{person.role}</p>
                     </div>
@@ -122,6 +124,6 @@ const About = () => {
       </div>
     </MarketingLayout>
   );
-}
+};
 
-export default About; 
+export default About;

@@ -16,7 +16,7 @@ export enum Action {
 }
 
 type Props = {
-  book_id: number; 
+  book_id: number;
   action: Action;
 };
 
@@ -79,12 +79,10 @@ const Book = ({ book_id, action }: Props) => {
       },
     };
 
-   
     const blob = await Moralis.executeFunction(libraryCall);
 
     console.log(
-      "executeFunction respone from library ?=>" +
-        JSON.stringify(blob, null, 3)
+      "executeFunction respone from library ?=>" + JSON.stringify(blob, null, 3)
     );
 
     setPriceData(blob);
@@ -92,10 +90,10 @@ const Book = ({ book_id, action }: Props) => {
 
   const makeCalls = async () => {
     console.log("Getting -> " + book_id);
-    
+
     getMetaData();
-    getLibraryData(); 
-  }
+    getLibraryData();
+  };
 
   useEffect(() => {
     if (isInitialized && isAuthenticated && !isWeb3Enabled) {
@@ -114,7 +112,7 @@ const Book = ({ book_id, action }: Props) => {
       </div>
       <div className="mt-4 flex justify-between">
         <div>
-          <h3 className="text-sm text-gray-700">
+          <h3 className="text-sm text-gray-200">
             <Link href={link(String(book_id))}>
               <a>
                 <span aria-hidden="true" className="absolute inset-0" />
