@@ -29,10 +29,10 @@ const Book = ({ book, action }: Props) => {
 
   const link = (link: string) => {
     switch (action) {
-      case Action.mintERC721:
-        return `/mint/${link}`;
+      // case Action.mintERC721:
+      //   return `/mint/${link}`;
       case Action.buyERC721:
-        return `/buy/${link}`;
+        return `/mint/${link}`;
       case Action.buyERC1155:
         return `/buy/${link}`;
       case Action.read:
