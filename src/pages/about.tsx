@@ -28,7 +28,7 @@ const people = [
   },
   {
     name: "Dalia Katan",
-    role: "",
+    role: "Professor of Divination",  
     twitterUrl: "https://twitter.com/daliakatan",
     imageUrl:
       "https://pbs.twimg.com/profile_images/1476739180189396995/oXgEMno0_400x400.jpg",
@@ -36,7 +36,7 @@ const people = [
   },
   {
     name: "Sonia Joseph",
-    role: "",
+    role: "Professor of Transfiguration",
     twitterUrl: "https://twitter.com/soniajoseph_",
     imageUrl:
       "https://pbs.twimg.com/profile_images/1482899147967586312/qUQQ4A29_400x400.jpg",
