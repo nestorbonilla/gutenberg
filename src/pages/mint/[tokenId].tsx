@@ -46,8 +46,12 @@ const MintERC721 = () => {
   const [highlights, setHighlights] = useState<Highlight[]>();
   const MoralisHighlight = Moralis.Object.extend("Highlight");
 
-  const mint = async () => {  
+  const mint = async () => {
     const freshdata = { ...metadata, address, highlights };
+
+    console.log("Fresh data: ", freshdata);
+
+    // debugger;
     // upload to Pinata
     const metadataResult = await client.add(JSON.stringify(freshdata));
     const url = `https://ipfs.infura.io/ipfs/${metadataResult.path}`;

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Action } from "../components/book";
 import MarketingLayout from "../components/marketingLayout";
 import ProductGrid from "../components/productGrid";
-import { mockBooks } from "../types/mockMetadata";
 import { useRouter } from "next/router";
 
 const Profile = () => {

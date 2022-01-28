@@ -25,8 +25,8 @@ export default function Home() {
 
     const data = JSON.stringify(originalData);
     const parsedData = JSON.parse(data);
-    console.log("PARSED DATA");
-    console.log(parsedData);
+    // console.log("PARSED DATA");
+    // console.log(parsedData);
 
     let book_datas: any[] = [];
 
@@ -34,7 +34,7 @@ export default function Home() {
       book_datas.push({ id: Number(item[0].hex), contract: item[1] });
     });
 
-    console.log("book_datas => " + JSON.stringify(book_datas, null, 3));
+    // console.log("book_datas => " + JSON.stringify(book_datas, null, 3));
 
     setBooks(book_datas);
   };

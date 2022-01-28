@@ -21,7 +21,7 @@ export enum Action {
 }
 
 type Props = {
-  book: any;
+  book: { id: number; contract: string };
   action: Action;
 };
 
@@ -51,10 +51,13 @@ const Book = ({ book, action }: Props) => {
 
     const getMetaData = {
       contractAddress: book.contract,
-      functionName: book.contract === GENESIS_ADDRESS ? 'uri' : 'tokenURI',
+      functionName: book.contract === GENESIS_ADDRESS ? "uri" : "tokenURI",
       // abi: Genesis.abi,
       abi: book.contract === GENESIS_ADDRESS ? Genesis.abi : Secondary.abi,
-      params: book.contract === GENESIS_ADDRESS ? { _tokenId: book.id } : { tokenId: book.id },
+      params:
+        book.contract === GENESIS_ADDRESS
+          ? { _tokenId: book.id }
+          : { tokenId: book.id },
     };
 
     // console.log("GetMetaDataArgBlob => " + JSON.stringify(getMetaData));
@@ -64,7 +67,7 @@ const Book = ({ book, action }: Props) => {
 
     let { data } = await axios.get(String(pinataLink));
 
-    console.log("Data from Link -> " + JSON.stringify(data, null, 3));
+    // console.log("Data from Link -> " + JSON.stringify(data, null, 3));
 
     setMetadata(data);
   };
@@ -83,9 +86,9 @@ const Book = ({ book, action }: Props) => {
 
     const blob = await Moralis.executeFunction(libraryCall);
 
-    console.log(
-      "executeFunction respone from library ?=>" + JSON.stringify(blob, null, 3)
-    );
+    // console.log(
+    //   "executeFunction respone from library ?=>" + JSON.stringify(blob, null, 3)
+    // );
 
     setPriceData(blob);
   };
