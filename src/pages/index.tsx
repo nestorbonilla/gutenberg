@@ -57,7 +57,7 @@ export default function Home() {
     <MarketingLayout>
       <LandingHeader />
       {books ? (
-        <ProductGrid books={books} action={Action.buyERC1155} />
+        <ProductGrid books={books} genesis_action="buy" secondary_action="mint" />
       ) : null}
     </MarketingLayout>
   );

@@ -20,25 +20,27 @@ export enum Action {
 
 type Props = {
   book: { id: number; contract: string };
-  action: Action;
+  genesis_action: string;
+  secondary_action: string; 
+  params: boolean; 
 };
 
-const Book = ({ book, action }: Props) => {
+const Book = ({ book, genesis_action, secondary_action, params = false }: Props) => {
   const [metadata, setMetadata] = useState<any>();
   const [priceData, setPriceData] = useState<any>();
 
-  const link = (link: string) => {
-    switch (action) {
-      // case Action.mintERC721:
-      //   return `/mint/${link}`;
-      case Action.buyERC721:
-        return `/mint/${link}`;
-      case Action.buyERC1155:
-        return `/buy/${link}`;
-      case Action.read:
-        return `/read/${link}`;
-    }
-  };
+  // const link = (link: string) => {
+  //   switch (action) {
+  //     // case Action.mintERC721:
+  //     //   return `/mint/${link}`;
+  //     case Action.buyERC721:
+  //       return `/mint/${link}`;
+  //     case Action.buyERC1155:
+  //       return `/buy/${link}`;
+  //     case Action.read:
+  //       return `/read/${link}`;
+  //   }
+  // };
 
   const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
     useMoralis();
@@ -112,7 +114,7 @@ const Book = ({ book, action }: Props) => {
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-200">
-            <Link href={link(String(book.id))}>
+            <Link href={`${book.contract === GENESIS_ADDRESS ? genesis_action : secondary_action}/${book.id}${params ? "?marked=1" : ""}`}>
               <a>
                 <span aria-hidden="true" className="absolute inset-0" />
                 {metadata?.name}

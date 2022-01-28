@@ -30,7 +30,9 @@ const Libarary = () => {
     const blob2: any = await Moralis.executeFunction(libraryCall2);
 
     console.log("Blob from fetchMyNFTS ?=> " + JSON.stringify(blob, null, 3));
-    console.log("Blob from fetchBooksCreated ?=> " + JSON.stringify(blob2, null, 3));
+    console.log(
+      "Blob from fetchBooksCreated ?=> " + JSON.stringify(blob2, null, 3)
+    );
 
     const data = JSON.stringify(blob);
     const parsedData = JSON.parse(data);
@@ -56,7 +58,14 @@ const Libarary = () => {
 
   return (
     <MarketingLayout>
-      {books ? <ProductGrid books={books} action={Action.read} /> : null}
+      {books ? (
+        <ProductGrid
+          books={books}
+          params={true}
+          genesis_action="read"
+          secondary_action="read"
+        />
+      ) : null}
     </MarketingLayout>
   );
 };
