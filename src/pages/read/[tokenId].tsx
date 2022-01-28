@@ -1,4 +1,5 @@
 import { MenuIcon } from "@heroicons/react/outline";
+import axios from "axios";
 import { Rendition } from "epubjs";
 import Moralis from 'moralis';
 import type { NextPage } from "next";
@@ -6,11 +7,12 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { ReactReader } from "react-reader";
 import RightSlider, { Highlight } from "../../components/rightSlider";
+import { GENESIS_ADDRESS, SECONDARY_ADDRESS } from "../../utils/addresses";
 // import styles from '../styles/Home.module.css'
 
 const Reader: NextPage = () => {
   const router = useRouter();
-  const { tokenId, original } = router.query;
+  const { tokenId, marked } = router.query;
   const [tokenMetadata, setTokenMetadata] = useState<any>();
   const [address, setAddress] = useState<string>();
 
@@ -29,16 +31,18 @@ const Reader: NextPage = () => {
         return;
       }
 
-      // load epub URL
+      // load epub URLs
       const options: any = {
-        address: "0x783dA6C07ca303a25576409254dC26f6B66Fa66B",
+        address: marked === "1" ? SECONDARY_ADDRESS : GENESIS_ADDRESS,
         token_id: tokenId,
         chain: "mumbai",
       };
       const tokenMetadataRes = await Moralis.Web3API.token.getTokenIdMetadata(options);
       if (tokenMetadataRes.metadata) {
         setTokenMetadata(JSON.parse(tokenMetadataRes.metadata as string));
-      } else {
+      } else if (tokenMetadataRes.token_uri) {
+        const { data } = await axios.get(tokenMetadataRes.token_uri);
+        setTokenMetadata(data);
       }
 
       // load personal highlights
@@ -49,11 +53,24 @@ const Reader: NextPage = () => {
         .equalTo("bookId", tokenId)
         .find()
         .then((results) => {
-          setHighlights(results.map(result => result.toJSON() as unknown as Highlight));
+          setOtherHighlights(results.map(result => result.toJSON() as unknown as Highlight));
         });
     }
     init();
   }, [tokenId])
+
+  useEffect(() => {
+    // load other highlights
+    if (marked === "1" && tokenMetadata) {
+      new Moralis.Query(MoralisHighlight)
+        .equalTo("address", tokenMetadata.address)
+        .equalTo("bookId", tokenId)
+        .find()
+        .then((results) => {
+          setHighlights(results.map(result => result.toJSON() as unknown as Highlight));
+        });
+    }
+  })
 
   useEffect(() => {
     if (renditionRef.current && tocRef.current) {
@@ -93,6 +110,8 @@ const Reader: NextPage = () => {
       }
     });
     highlights.forEach(highlight => renditionRef.current!.annotations.add("highlight", highlight.cfiRange));
+    otherHighlights.forEach(highlight =>
+      renditionRef.current!.annotations.add("highlight", highlight.cfiRange, {}, undefined , "hl", {"fill": "red", "fill-opacity": "0.5", "mix-blend-mode": "multiply"}));
   }
 
   function selectHighlight(cfiRange: string) {

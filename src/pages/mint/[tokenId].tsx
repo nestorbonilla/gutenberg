@@ -34,7 +34,7 @@ const MintERC721 = () => {
   const MoralisHighlight = Moralis.Object.extend("Highlight");
 
   const mint = async () => {
-    const metadata = { address, highlights };
+    const metadata = { ...mintBook, address, highlights };
     // upload to Pinata
     const metadataResult = await client.add(JSON.stringify(metadata));
     const url = `https://ipfs.infura.io/ipfs/${metadataResult.path}`;
