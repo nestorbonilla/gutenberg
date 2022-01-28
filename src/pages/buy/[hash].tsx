@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
 import { CurrencyDollarIcon, GlobeIcon } from "@heroicons/react/outline";
-import MarketingLayout from "../../components/marketingLayout";
-import BookList from "../../components/bookList";
-import { useMoralis } from "react-moralis";
-import { useRouter } from "next/router";
-
 import axios from "axios";
-import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../../utils/addresses";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useMoralis } from "react-moralis";
 import Genesis from "../../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
 import Library from "../../../artifacts/contracts/Library.sol/Library.json";
+import MarketingLayout from "../../components/marketingLayout";
+import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../../utils/addresses";
+
 
 const policies = [
   {
@@ -34,14 +33,13 @@ const ProductView = ({ erc721, parentCall }: Props) => {
   const [priceData, setPriceData] = useState<any>();
   const router = useRouter();
   const { hash } = router.query;
-  // console.log("Book id in book -> " + hash);
+  const [loading, setLoading] = useState(false);
 
   const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
     useMoralis();
 
   const buy = async () => {
-    console.log("FUCK");
-
+    setLoading(true);
     const libraryCall = {
       contractAddress: LIBRARY_CONTRACT,
       functionName: "createLibrarySale",
@@ -58,6 +56,7 @@ const ProductView = ({ erc721, parentCall }: Props) => {
     const blob: any = await Moralis.executeFunction(libraryCall);
 
     console.log("Blob from mint ?=> " + JSON.stringify(blob, null, 3));
+    setLoading(false);
   };
 
   const getMetaData = async () => {
@@ -296,6 +295,10 @@ const ProductView = ({ erc721, parentCall }: Props) => {
                     : `Buy ${priceData?.sales + 1} / ${
                         priceData?.units
                       } Genesis`}
+                  {loading && <div
+                    style={{ borderTopColor: "transparent" }}
+                    className="ml-2 w-6 h-6 border-2 border-white border-solid rounded-full animate-spin"
+                  />}
                 </a>
               </form>
 

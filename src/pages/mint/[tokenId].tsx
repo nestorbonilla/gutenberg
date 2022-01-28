@@ -41,7 +41,8 @@ const MintERC721 = () => {
   const [highlights, setHighlights] = useState<Highlight[]>();
   const MoralisHighlight = Moralis.Object.extend("Highlight");
 
-  const mint = async () => {  
+  const mint = async () => {
+    setMinting(true);
     const freshdata = { ...metadata, address, highlights };
     // upload to Pinata
     const metadataResult = await client.add(JSON.stringify(freshdata));
@@ -78,7 +79,7 @@ const MintERC721 = () => {
     const results = await Moralis.executeFunction(libraryData);
 
     console.log(results, null, 3);
-
+    setMinting(false);
     router.replace("/library");
   };
 
@@ -177,7 +178,7 @@ const MintERC721 = () => {
                 <div>
                   <h2 className="text-md font-medium text-gray-200 mb-5 ">
                     {highlights?.length}
-                    {highlights?.length === 1 ? "Annotation" : "Annotations"}
+                    {highlights?.length === 1 ? " Annotation" : " Annotations"}
                   </h2>
                   {/* My Annotations Meta data */}
                   {/* <Annotationer annotation={book.annotations} /> */}
@@ -189,6 +190,10 @@ const MintERC721 = () => {
                   className="mt-8 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Mint Annotated NFT
+                  {minting && <div
+                    style={{ borderTopColor: "transparent" }}
+                    className="ml-2 w-6 h-6 border-2 border-white border-solid rounded-full animate-spin"
+                  />}
                 </a>
               </form>
 
