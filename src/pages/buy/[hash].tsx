@@ -75,7 +75,7 @@ const ProductView = ({ erc721, parentCall }: Props) => {
 
     console.log(
       "executeFunction response in book ?=>" +
-        JSON.stringify(pinataLink, null, 3)
+      JSON.stringify(pinataLink, null, 3)
     );
 
     let { data } = await axios.get(String(pinataLink));
@@ -127,7 +127,6 @@ const ProductView = ({ erc721, parentCall }: Props) => {
 
   return (
     <MarketingLayout>
-      {/* <div className="bg-white"> */}
       <div className="pt-6 pb-16 sm:pb-24">
         {/* <nav aria-label="Breadcrumb" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> */}
         {/* <ol role="list" className="flex items-center space-x-4"> */}
@@ -167,61 +166,15 @@ const ProductView = ({ erc721, parentCall }: Props) => {
                   {/* {JSON.stringify(priceData)} */}
                 </p>
               </div>
-              {/* Reviews */}
-              {/* <div className="mt-4">
-                <h2 className="sr-only">Reviews</h2>
-                <div className="flex items-center"> */}
-              {/* <p className="text-sm text-gray-700">
-                    {4}
-                    <span className="sr-only"> out of 5 stars</span>
-                  </p> */}
-              {/* <div className="ml-1 flex items-center">
-                    {[0, 1, 2, 3, 4].map((rating) => (
-                      <StarIcon
-                        key={rating}
-                        className={classNames(
-                          book.rating > rating
-                            ? "text-yellow-400"
-                            : "text-gray-200",
-                          "h-5 w-5 flex-shrink-0"
-                        )}
-                        aria-hidden="true"
-                      />
-                    ))}
-                  </div> */}
-              {/* <div
-                    aria-hidden="true"
-                    className="ml-4 text-sm text-gray-300"
-                  >
-                    · */}
-              {/* </div>
-                  <div className="ml-4 flex">
-                    <a
-                      href="#"
-                      className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                    > */}
-              {/* See all {book} reviews */}
-              {/* </a>
-                  </div>
-                </div>
-                          </div>  */}
-              {/*  */}
             </div>
 
-            {/* Image gallery */}
             <div className="mt-8 lg:mt-0 lg:col-start-1 lg:col-span-7 lg:row-start-1 lg:row-span-3">
               <h2 className="sr-only">Images</h2>
 
-              {/* <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
-                {book.images.map((image) => ( */}
               <img
-                // key={mintBook.image}
                 src={metadata?.image}
-                // alt={image.imageAlt}
                 className={"lg:col-span-2 lg:row-span-2 rounded-lg"}
               />
-              {/* ))}
-              </div> */}
             </div>
 
             <div className="mt-8 lg:col-span-5">
@@ -236,65 +189,11 @@ const ProductView = ({ erc721, parentCall }: Props) => {
                   </div>
                 ) : null}
 
-                {/* Size picker */}
-                <div className="mt-8">
-                  {/* <div className="flex items-center justify-between">
-                    <h2 className="text-sm font-medium text-gray-900">Size</h2>
-                    <a
-                      href="#"
-                      className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      See sizing chart
-                    </a>
-                  </div> */}
-
-                  {/* <RadioGroup
-                    value={selectedSize}
-                    onChange={setSelectedSize}
-                    className="mt-2"
-                  >
-                    <RadioGroup.Label className="sr-only">
-                      Choose a size
-                    </RadioGroup.Label>
-                    <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
-                      {book.sizes.map((size) => (
-                        <RadioGroup.Option
-                          key={size.name}
-                          value={size}
-                          className={({ active, checked }) =>
-                            classNames(
-                              size.inStock
-                                ? "cursor-pointer focus:outline-none"
-                                : "opacity-25 cursor-not-allowed",
-                              active
-                                ? "ring-2 ring-offset-2 ring-indigo-500"
-                                : "",
-                              checked
-                                ? "bg-indigo-600 border-transparent text-white hover:bg-indigo-700"
-                                : "bg-white border-gray-200 text-gray-900 hover:bg-gray-50",
-                              "border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1"
-                            )
-                          }
-                          disabled={!size.inStock}
-                        >
-                          <RadioGroup.Label as="p">
-                            {size.name}
-                          </RadioGroup.Label>
-                        </RadioGroup.Option>
-                      ))}
-                    </div>
-                  </RadioGroup> */}
-                </div>
-
                 <a
                   onClick={buy}
                   className="mt-8 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  {erc721
-                    ? "Mint Annotated NFT"
-                    : `Buy ${priceData?.sales + 1} / ${
-                        priceData?.units
-                      } Genesis`}
+                  {`Buy ${priceData?.sales + 1} / ${priceData?.units} Genesis`}
                   {loading && <div
                     style={{ borderTopColor: "transparent" }}
                     className="ml-2 w-6 h-6 border-2 border-white border-solid rounded-full animate-spin"
@@ -360,7 +259,6 @@ const ProductView = ({ erc721, parentCall }: Props) => {
           </div>
         </div>
       </div>
-      {/* </div> */}
       {/* <BookList hash={book.hash} /> */}
     </MarketingLayout>
   );
