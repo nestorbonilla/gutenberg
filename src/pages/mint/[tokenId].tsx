@@ -1,19 +1,17 @@
 import { CurrencyDollarIcon, GlobeIcon } from "@heroicons/react/outline";
+import axios from "axios";
 import { create as ipfsHttpClient } from "ipfs-http-client";
-// import Moralis from "moralis";
-import { useMoralis } from "react-moralis";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Secondary from "../../../artifacts/contracts/SecondaryCollection.sol/SecondaryCollection.json";
-import Library from "../../../artifacts/contracts/Library.sol/Library.json";
+// import Moralis from "moralis";
+import { useMoralis } from "react-moralis";
 import Genesis from "../../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
-import axios from "axios";
+import Library from "../../../artifacts/contracts/Library.sol/Library.json";
+import Secondary from "../../../artifacts/contracts/SecondaryCollection.sol/SecondaryCollection.json";
 import MarketingLayout from "../../components/marketingLayout";
 import { Highlight } from "../../components/rightSlider";
 import {
-  SECONDARY_ADDRESS,
-  LIBRARY_CONTRACT,
-  GENESIS_ADDRESS,
+  GENESIS_ADDRESS, LIBRARY_CONTRACT, SECONDARY_ADDRESS
 } from "../../utils/addresses";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0" as any);
@@ -184,7 +182,8 @@ const MintERC721 = () => {
               <form>
                 <div>
                   <h2 className="text-md font-medium text-gray-200 mb-5 ">
-                    {highlights && highlights.length} Annotations
+                    {highlights?.length}
+                    {highlights?.length === 1 ? "Annotation" : "Annotations"}
                   </h2>
                   {/* My Annotations Meta data */}
                   {/* <Annotationer annotation={book.annotations} /> */}

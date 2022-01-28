@@ -41,7 +41,8 @@ const Reader: NextPage = () => {
       if (tokenMetadataRes.metadata) {
         setTokenMetadata(JSON.parse(tokenMetadataRes.metadata as string));
       } else if (tokenMetadataRes.token_uri) {
-        // super jank but idk why the moralis gateway is slow af
+        // seems like moralis doesn't always populate the metadata (indexing delay?) so we fetch it ourselves
+        // also doctor the URL to read from infura rather than the moralis gateway
         const url = new URL(tokenMetadataRes.token_uri);
         const { data } = await axios.get("https://ipfs.infura.io" + url.pathname);
         setTokenMetadata(data);
