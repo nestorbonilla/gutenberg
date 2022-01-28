@@ -107,10 +107,15 @@ export default function RightSlider(props: RightSliderProps) {
                     {props.toc
                       .filter(chapter => groupedHighlights[chapter.href])
                       .map(chapter => (
-                        <li>
+                        <li key={chapter.href}>
                           <div className="pt-4 pb-2 px-5">{chapter.label}</div>
                           <ul role="list" className="flex-1 overflow-y-auto">
-                            {props.highlights.map((highlight) => <HighlightComponent highlight={highlight} select={props.select} delete={props.delete} />)}
+                            {groupedHighlights[chapter.href].map((highlight) => <HighlightComponent
+                              key={highlight.objectId}
+                              highlight={highlight}
+                              select={props.select}
+                              delete={props.delete}
+                            />)}
                           </ul>
                         </li>
                       ))}

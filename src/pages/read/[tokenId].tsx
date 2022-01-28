@@ -10,13 +10,14 @@ import RightSlider, { Highlight } from "../../components/rightSlider";
 
 const Reader: NextPage = () => {
   const router = useRouter();
-  const { tokenId } = router.query;
+  const { tokenId, original } = router.query;
   const [tokenMetadata, setTokenMetadata] = useState<any>();
   const [address, setAddress] = useState<string>();
 
   const [showHighlights, setShowHighlights] = useState(false);
   const [location, setLocation] = useState<string>();
   const [highlights, setHighlights] = useState<Highlight[]>([]);
+  const [otherHighlights, setOtherHighlights] = useState<Highlight[]>([]);
 
   const renditionRef = useRef<Rendition>();
   const tocRef = useRef<any>();
@@ -40,7 +41,7 @@ const Reader: NextPage = () => {
       } else {
       }
 
-      // load previously saved highlights
+      // load personal highlights
       const user: any = Moralis.User.current();
       setAddress(user.get("ethAddress"));
       new Moralis.Query(MoralisHighlight)
