@@ -1,17 +1,17 @@
 {
-    "name": "The War of the Worlds",
-    "description": "When an army of invading Martians lands in England, panic and terror seize the population. As the aliens traverse the country in huge three-legged machines, incinerating all in their path with a heat ray and spreading noxious toxic gases, the people of the Earth must come to terms with the prospect of the end of human civilization and the beginning of Martian rule.\n\nInspiring films, radio dramas, comic-book adaptations, television series and sequels,The War of the Worlds is a prototypical work of science fiction which has influenced every alien story that has come since, and is unsurpassed in its ability to thrill, well over a century since it was first published.",
-    "image": "https://gateway.pinata.cloud/ipfs/QmY3VkGTf1fXAdvUKnGyiGXwrTRGzvQ2BfNNKgmdQ4xAjV",
-    "book_url": "https://gateway.pinata.cloud/ipfs/QmWfDD6MnAhftnzZUeUnMaDXctPXr4FgWHjt6TbvNQZAzS",
+    "name": "Erewhon",
+    "description": "An explorer discovers a utopian society with unconventional views on crime, illness, and religion. Erewhon, by Samuel Butler, is loosely inspired by his personal experience in New Zealand where he worked as a sheep farmer. The novel is a brilliant satire of Victorian society as a rigid and failing institution.",
+    "image": "https://gateway.pinata.cloud/ipfs/QmNbKah6YL4PwFGSvcR8n17zxHzPmrJjvmp2c7PL8QdZi7",
+    "book_url": "https://gateway.pinata.cloud/ipfs/QmdXhfHnEAhvZQhn5ix5PVARx9zBpZWy1s4PhDDowrAfBv",
     "attributes": [
         {
             "trait_type": "author", 
-            "value": "H. G. Wells"
+            "value": "Samuel Butler"
         },
         {
             "display_type": "date", 
             "trait_type": "published", 
-            "value": -2303578800
+            "value": -3092583838
         }
     ]
 }

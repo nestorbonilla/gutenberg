@@ -1,12 +1,12 @@
 {
-    "name": "A Journey to the Center of the Earth",
-    "description": "An adventurous geology professor chances upon a manuscript in which a 16th-century explorer claims to have found a route to the earth's core. Professor Lidenbrock can't resist the opportunity to investigate, and with his nephew Axel, he sets off across Iceland in the company of Hans Bjelke, a native guide. The expedition descends into an extinct volcano toward a sunless sea, where they encounter a subterranean world of luminous rocks, antediluvian forests, and fantastic marine life — a living past that holds the secrets to the origins of human existence.",
-    "image": "https://gateway.pinata.cloud/ipfs/QmNu3fbCYZY73V45A49iG8RDd3uPWuQX4aDTBPTF4FyLuM",
+    "name": "Frankenstein",
+    "description": "Few creatures of horror have seized readers' imaginations and held them for so long as the anguished monster of Mary Shelley's Frankenstein. The story of Victor Frankenstein's terrible creation and the havoc it caused has enthralled generations of readers and inspired countless writers of horror and suspense. Considering the novel's enduring success, it is remarkable that it began merely as a whim of Lord Byron's.",
+    "image": "https://gateway.pinata.cloud/ipfs/QmbepoU6aL52aQC7Y3kUFaVCbpN5NALrpYQ4F949j5SpeK",
     "book_url": "https://gateway.pinata.cloud/ipfs/QmSDDkBYVrf5hffQcLB2waCVTKfWeKQG1iBdqKtKQJrp9a",
     "attributes": [
         {
             "trait_type": "author", 
-            "value": "Jules Verne"
+            "value": "Mary Shelley"
         },
         {
             "display_type": "date", 
