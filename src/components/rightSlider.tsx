@@ -1,8 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
+import Link from "next/link";
 import { Fragment, useState } from "react";
 import AllHighlights from "./allHighlights";
-import Link from "next/link";
 
 export interface Toc {
   label: string;
@@ -120,7 +120,7 @@ export default function RightSlider(props: RightSliderProps) {
                     highlights={
                       mode === "my" ? props.highlights : props.otherHighlights
                     }
-                    color="#7986cb"
+                    color={mode === "my" ? undefined : "#7986cb"}
                     select={props.select}
                     delete={props.delete}
                   />
