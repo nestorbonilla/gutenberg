@@ -8,13 +8,12 @@ import { abi } from "../../artifacts/contracts/Library.sol/Library.json";
 import { useMoralis } from "react-moralis";
 
 export default function Home() {
-  const [bookIds, setBooksIds] = useState<any>([]);
+  const [books, setBooks] = useState<any>([]);
 
   const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
     useMoralis();
 
   const call = async () => {
-
     const readOptions = {
       contractAddress: LIBRARY_CONTRACT,
       functionName: "fetchBooks",
@@ -26,14 +25,18 @@ export default function Home() {
 
     const data = JSON.stringify(originalData);
     const parsedData = JSON.parse(data);
+    console.log("PARSED DATA");
+    console.log(parsedData);
 
-    let ids: number[] = [];
+    let book_datas: any[] = [];
 
     parsedData.forEach((item: any) => {
-      ids.push(Number(item[0].hex));
+      book_datas.push({ id: Number(item[0].hex), contract: item[1] });
     });
 
-    setBooksIds(ids);
+    console.log("book_datas => " + JSON.stringify(book_datas, null, 3));
+
+    setBooks(book_datas);
   };
 
   useEffect(() => {
@@ -45,8 +48,8 @@ export default function Home() {
   return (
     <MarketingLayout>
       <LandingHeader />
-      {bookIds ? (
-        <ProdcutGrid books={bookIds} action={Action.buyERC1155} />
+      {books ? (
+        <ProdcutGrid books={books} action={Action.buyERC1155} />
       ) : null}
     </MarketingLayout>
   );

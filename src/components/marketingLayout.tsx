@@ -147,7 +147,7 @@ const MarketingLayout = ({ children }: any) => {
               <div className="hidden md:flex md:space-x-10">
                 {navigation.map((item) => (
                   <Link key={item.name} href={item.href}>
-                    <a className="font-medium text-gray-50 hover:text-gray-900">
+                    <a className="font-medium text-gray-50 hover:text-pink-400">
                       {item.name}
                     </a>
                   </Link>

@@ -4,9 +4,14 @@ import { useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import Genesis from "../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
 import Library from "../../artifacts/contracts/Library.sol/Library.json";
+import Secondary from "../../artifacts/contracts/SecondaryCollection.sol/SecondaryCollection.json";
 
 import axios from "axios";
-import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../utils/addresses";
+import {
+  GENESIS_ADDRESS,
+  LIBRARY_CONTRACT,
+  SECONDARY_ADDRESS,
+} from "../utils/addresses";
 
 export enum Action {
   mintERC721 = "mintER721",
@@ -16,11 +21,11 @@ export enum Action {
 }
 
 type Props = {
-  book_id: number;
+  book: any;
   action: Action;
 };
 
-const Book = ({ book_id, action }: Props) => {
+const Book = ({ book, action }: Props) => {
   // console.log("Book id in book -> " + book_id);
   const [metadata, setMetadata] = useState<any>();
   const [priceData, setPriceData] = useState<any>();
@@ -45,17 +50,21 @@ const Book = ({ book_id, action }: Props) => {
     console.log("Calling");
 
     const getMetaData = {
-      contractAddress: GENESIS_ADDRESS,
-      functionName: "uri",
-      abi: Genesis.abi,
-      params: {
-        _tokenId: book_id,
-      },
+      contractAddress: book.contract,
+      functionName: book.contract === GENESIS_ADDRESS ? 'uri' : 'tokenURI',
+      // abi: Genesis.abi,
+      abi: book.contract === GENESIS_ADDRESS ? Genesis.abi : Secondary.abi,
+      params: book.contract === GENESIS_ADDRESS ? { _tokenId: book.id } : { tokenId: book.id },
     };
 
+    // console.log("GetMetaDataArgBlob => " + JSON.stringify(getMetaData));
+
     const pinataLink = await Moralis.executeFunction(getMetaData);
-   
+    console.log("Pinata link -> " + pinataLink);
+
     let { data } = await axios.get(String(pinataLink));
+
+    console.log("Data from Link -> " + JSON.stringify(data, null, 3));
 
     setMetadata(data);
   };
@@ -68,7 +77,7 @@ const Book = ({ book_id, action }: Props) => {
       functionName: "fetchBook",
       abi: Library.abi,
       params: {
-        bookId: book_id,
+        bookId: book.id,
       },
     };
 
@@ -82,7 +91,7 @@ const Book = ({ book_id, action }: Props) => {
   };
 
   const makeCalls = async () => {
-    console.log("Getting -> " + book_id);
+    console.log("Getting -> " + JSON.stringify(book, null, 3));
 
     getMetaData();
     getLibraryData();
@@ -106,7 +115,7 @@ const Book = ({ book_id, action }: Props) => {
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-200">
-            <Link href={link(String(book_id))}>
+            <Link href={link(String(book.id))}>
               <a>
                 <span aria-hidden="true" className="absolute inset-0" />
                 {metadata?.name}

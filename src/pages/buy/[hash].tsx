@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 
 import axios from "axios";
 import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../../utils/addresses";
-
 import Genesis from "../../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
 import Library from "../../../artifacts/contracts/Library.sol/Library.json";
 

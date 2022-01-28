@@ -1,7 +1,7 @@
 import { CurrencyDollarIcon, GlobeIcon } from "@heroicons/react/outline";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 // import Moralis from "moralis";
-import { useMoralis, useMoralisQuery } from "react-moralis";
+import { useMoralis } from "react-moralis";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Secondary from "../../../artifacts/contracts/SecondaryCollection.sol/SecondaryCollection.json";
@@ -46,10 +46,10 @@ const MintERC721 = () => {
   const [highlights, setHighlights] = useState<Highlight[]>();
   const MoralisHighlight = Moralis.Object.extend("Highlight");
 
-  const mint = async () => {
-    const metadata = { ...mintBook, address, highlights };
+  const mint = async () => {  
+    const freshdata = { ...metadata, address, highlights };
     // upload to Pinata
-    const metadataResult = await client.add(JSON.stringify(metadata));
+    const metadataResult = await client.add(JSON.stringify(freshdata));
     const url = `https://ipfs.infura.io/ipfs/${metadataResult.path}`;
     console.log("info has been uploaded: ", url);
 
