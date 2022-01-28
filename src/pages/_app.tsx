@@ -1,11 +1,11 @@
 // import Moralis from "moralis";
 import Moralis from "moralis";
 import type { AppProps } from "next/app";
+import dynamic from "next/dynamic";
 import { MoralisProvider } from "react-moralis";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  
   Moralis.start({
     serverUrl: "https://7fqgvttpqukt.usemoralis.com:2053/server",
     appId: "585mUNiZ538xo3FEY7lbXWFZjjFPNxKOvUstjfhc",
@@ -16,9 +16,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       appId={"585mUNiZ538xo3FEY7lbXWFZjjFPNxKOvUstjfhc"}
       serverUrl={"https://7fqgvttpqukt.usemoralis.com:2053/server"}
     >
-      <Component {...pageProps} />
+        <Component {...pageProps} />
     </MoralisProvider>
   );
 }
 
-export default MyApp;
+export default dynamic(() => Promise.resolve(MyApp), {
+  ssr: false,
+});
