@@ -108,11 +108,11 @@ const MintERC721 = () => {
 
   const getMetaData = async () => {
     const getMetaData = {
-      contractAddress: GENESIS_ADDRESS,
-      functionName: "uri",
-      abi: Genesis.abi,
+      contractAddress: SECONDARY_ADDRESS,
+      functionName: "tokenURI",
+      abi: Secondary.abi,
       params: {
-        _tokenId: tokenId,
+        tokenId: tokenId,
       },
     };
 
@@ -165,9 +165,9 @@ const MintERC721 = () => {
                 <h1 className="text-xl font-medium text-gray-200">
                   <div>{metadata?.name}</div>
                 </h1>
-                {/*<p className="text-xl font-medium rounded-full bg-green-100 text-green-800">
-                  ${mintBook.price}
-                </p>*/}
+                <p className="text-xl font-medium rounded-full bg-green-100 text-green-800">
+                  {`$${priceData?.price}`}
+                </p>
               </div>
             </div>
 

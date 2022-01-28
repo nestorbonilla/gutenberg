@@ -114,7 +114,7 @@ const Book = ({ book, genesis_action, secondary_action, params = false }: Props)
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-200">
-            <Link href={`${book.contract === GENESIS_ADDRESS ? genesis_action : secondary_action}/${book.id}${params ? "?marked=1" : ""}`}>
+            <Link href={`${book.contract === GENESIS_ADDRESS ? genesis_action : secondary_action}/${book.id}${(params && book.contract === SECONDARY_ADDRESS) ? "?marked=1" : ""}`}>
               <a>
                 <span aria-hidden="true" className="absolute inset-0" />
                 {metadata?.name}

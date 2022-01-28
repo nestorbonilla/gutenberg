@@ -5,7 +5,7 @@ type Props = {
   genesis_action: string;
   secondary_action: string;
   books: { id: number; contract: string }[];
-  params: boolean;
+  params?: boolean;
 };
 
 const ProductGrid = ({
