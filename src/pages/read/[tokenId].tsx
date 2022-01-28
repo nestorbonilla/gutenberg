@@ -56,7 +56,7 @@ const Reader: NextPage = () => {
         .equalTo("bookId", tokenId)
         .find()
         .then((results) => {
-          setOtherHighlights(results.map(result => result.toJSON() as unknown as Highlight));
+          setHighlights(results.map(result => result.toJSON() as unknown as Highlight));
         });
     }
     init();
