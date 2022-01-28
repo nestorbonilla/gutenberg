@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
-import { abi } from "../../artifacts/contracts/Library.sol/Library.json";
+import Library from "../../artifacts/contracts/Library.sol/Library.json";
 import { Action } from "../components/book";
 import LandingHeader from "../components/landingHeader";
 import MarketingLayout from "../components/marketingLayout";
@@ -17,7 +17,7 @@ export default function Home() {
     const readOptions = {
       contractAddress: LIBRARY_CONTRACT,
       functionName: "fetchBooks",
-      abi,
+      abi: Library.abi,
     };
 
     await Moralis.enableWeb3();

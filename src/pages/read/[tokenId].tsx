@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from "react";
 import { ReactReader } from "react-reader";
 import RightSlider, { Highlight } from "../../components/rightSlider";
 import { GENESIS_ADDRESS, SECONDARY_ADDRESS } from "../../utils/addresses";
-// import styles from '../styles/Home.module.css'
 
 const Reader: NextPage = () => {
   const router = useRouter();
