@@ -41,7 +41,9 @@ const Reader: NextPage = () => {
       if (tokenMetadataRes.metadata) {
         setTokenMetadata(JSON.parse(tokenMetadataRes.metadata as string));
       } else if (tokenMetadataRes.token_uri) {
-        const { data } = await axios.get(tokenMetadataRes.token_uri);
+        // super jank but idk why the moralis gateway is slow af
+        const url = new URL(tokenMetadataRes.token_uri);
+        const { data } = await axios.get("https://ipfs.infura.io" + url.pathname);
         setTokenMetadata(data);
       }
 
