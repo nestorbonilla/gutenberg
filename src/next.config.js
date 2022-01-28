@@ -1,5 +1,4 @@
-const nextConfig = {
+module.exports = {
   reactStrictMode: true,
-};
-
-module.exports = nextConfig;
+  distDir: "build"
+}
