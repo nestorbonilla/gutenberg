@@ -8,9 +8,8 @@ import Secondary from "../../artifacts/contracts/SecondaryCollection.sol/Seconda
 import {
   LIBRARY_CONTRACT,
   GENESIS_ADDRESS,
-  SECONDARY_ADDRESS
+  SECONDARY_ADDRESS,
 } from "../utils/addresses";
-
 
 export enum Action {
   mintERC721 = "mintER721",
@@ -94,12 +93,21 @@ const Book = ({ book, action }: Props) => {
 
   return (
     <div key={metadata?.ipfs_url} className="group relative">
-      <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+      <div
+        className={`w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none ${
+          book.contract === SECONDARY_ADDRESS
+            ? "border-2 border-yellow-200"
+            : ""
+        }`}
+      >
         <img
           src={metadata?.image}
           // alt={book.description}
           className="w-full h-full object-center object-cover lg:w-full lg:h-full"
         />
+        {book.contract === SECONDARY_ADDRESS ? (
+          <div className="-mt-12 pl-2 text-3xl">{`✨`}</div>
+        ) : null}
       </div>
       <div className="mt-4 flex justify-between">
         <div>

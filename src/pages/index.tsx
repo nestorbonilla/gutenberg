@@ -36,7 +36,7 @@ export default function Home() {
         book_datas.push({ id: Number(item[2].hex), contract: item[1] });
       }
 
-      // ERC721
+      // ERC721 <- this is funny nestor
       if (item[1] === SECONDARY_ADDRESS) {
         book_datas.push({ id: Number(item[2].hex), contract: item[1] });
       }
