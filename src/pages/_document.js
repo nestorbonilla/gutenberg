@@ -19,6 +19,7 @@ class MyDocument extends Document {
             src="https://kernel-labs-umami.vercel.app/umami.js"
             data-domains="worldli.me"
           ></script> */}
+          <title>Gutenberg NFT</title>
           {/* Favicons */}
           <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
           {/*<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
