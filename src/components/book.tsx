@@ -54,15 +54,8 @@ const Book = ({ book_id, action }: Props) => {
     };
 
     const pinataLink = await Moralis.executeFunction(getMetaData);
-
-    // console.log(
-    //   "executeFunction response in book ?=>" +
-    //     JSON.stringify(pinataLink, null, 3)
-    // );
-
+   
     let { data } = await axios.get(String(pinataLink));
-
-    // console.log(data);
 
     setMetadata(data);
   };

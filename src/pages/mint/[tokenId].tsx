@@ -1,13 +1,20 @@
 import { CurrencyDollarIcon, GlobeIcon } from "@heroicons/react/outline";
 import { create as ipfsHttpClient } from "ipfs-http-client";
-import Moralis from "moralis";
+// import Moralis from "moralis";
+import { useMoralis, useMoralisQuery } from "react-moralis";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Secondary from "../../../artifacts/contracts/SecondaryCollection.sol/SecondaryCollection.json";
 import Library from "../../../artifacts/contracts/Library.sol/Library.json";
+import Genesis from "../../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
+import axios from "axios";
 import MarketingLayout from "../../components/marketingLayout";
 import { Highlight } from "../../components/rightSlider";
-import { SECONDARY_ADDRESS, LIBRARY_CONTRACT } from "../../utils/addresses";
+import {
+  SECONDARY_ADDRESS,
+  LIBRARY_CONTRACT,
+  GENESIS_ADDRESS,
+} from "../../utils/addresses";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0" as any);
 const policies = [
@@ -28,6 +35,13 @@ const MintERC721 = () => {
   const { tokenId } = router.query;
   const [mintBook, setMintBook] = useState<any>();
   const [address, setAddress] = useState<string>();
+  const [metadata, setMetadata] = useState<any>();
+  const [priceData, setPriceData] = useState<any>();
+
+  // const { data, error, isLoading } = useMoralisQuery("GameScore");
+
+  const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
+    useMoralis();
 
   const [highlights, setHighlights] = useState<Highlight[]>();
   const MoralisHighlight = Moralis.Object.extend("Highlight");
@@ -53,57 +67,94 @@ const MintERC721 = () => {
     console.log(result, null, 3);
 
     let newBookId = Number(result?.events[0].args.tokenId["_hex"]);
+
     console.log(newBookId);
+
     const libraryData = {
       contractAddress: LIBRARY_CONTRACT,
       functionName: "createNonFungibleBook",
-      abi: Library.abi, 
+      abi: Library.abi,
       params: {
-        nftContract: LIBRARY_CONTRACT,
+        nftContract: SECONDARY_ADDRESS,
         tokenId: newBookId,
         price: 10,
       },
     };
-    await Moralis.executeFunction(libraryData);
+    const results = await Moralis.executeFunction(libraryData);
+
+    console.log(results, null, 3);
+
+    router.replace("/library");
   };
 
-  
+  const getAnnotations = async () => {
+    //load personal highlights
+    const user: any = Moralis.User.current();
+    setAddress(user.get("ethAddress"));
+    new Moralis.Query(MoralisHighlight)
+      .equalTo("address", user.get("ethAddress"))
+      .equalTo("bookId", tokenId)
+      .find()
+      .then((results) => {
+        setHighlights(
+          results.map((result) => result.toJSON() as unknown as Highlight)
+        );
+      });
+  };
+
+  const getMetaData = async () => {
+    console.log("Calling");
+
+    const getMetaData = {
+      contractAddress: GENESIS_ADDRESS,
+      functionName: "uri",
+      abi: Genesis.abi,
+      params: {
+        _tokenId: tokenId,
+      },
+    };
+
+    const pinataLink = await Moralis.executeFunction(getMetaData);
+
+    let { data } = await axios.get(String(pinataLink));
+
+    setMetadata(data);
+  };
+
+  const getLibraryData = async () => {
+    // console.log("Calling");
+
+    const libraryCall = {
+      contractAddress: LIBRARY_CONTRACT,
+      functionName: "fetchBook",
+      abi: Library.abi,
+      params: {
+        bookId: tokenId,
+      },
+    };
+
+    const blob = await Moralis.executeFunction(libraryCall);
+
+    console.log(
+      "executeFunction respone from library ?=>" + JSON.stringify(blob, null, 3)
+    );
+
+    setPriceData(blob);
+  };
+
+  const makeCalls = async () => {
+    // console.log("Getting -> " + book_id);
+    await Moralis.enableWeb3();
+    getAnnotations();
+    getMetaData();
+    getLibraryData();
+  };
+
   useEffect(() => {
-    async function init() {
-      Moralis.enableWeb3();
-      if (!tokenId) {
-        return;
-      }
-
-      const options: any = {
-        address: "0x783dA6C07ca303a25576409254dC26f6B66Fa66B",
-        token_id: tokenId,
-        chain: "mumbai",
-      };
-      
-      const tokenMetadataRes = await Moralis.Web3API.token.getTokenIdMetadata(
-        options
-      );
-      if (tokenMetadataRes.metadata) {
-        setMintBook(JSON.parse(tokenMetadataRes.metadata as string));
-      } else {
-      }
-
-      // load personal highlights
-      const user: any = Moralis.User.current();
-      setAddress(user.get("ethAddress"));
-      new Moralis.Query(MoralisHighlight)
-        .equalTo("address", user.get("ethAddress"))
-        .equalTo("bookId", tokenId)
-        .find()
-        .then((results) => {
-          setHighlights(
-            results.map((result) => result.toJSON() as unknown as Highlight)
-          );
-        });
+    if (isInitialized && isAuthenticated && !isWeb3Enabled && tokenId) {
+      makeCalls();
     }
-    init();
-  }, [tokenId]);
+  }, [isInitialized, isAuthenticated, isWeb3Enabled, tokenId]);
 
   return (
     <MarketingLayout>
@@ -112,8 +163,8 @@ const MintERC721 = () => {
           <div className="lg:grid lg:grid-cols-12 lg:auto-rows-min lg:gap-x-8">
             <div className="lg:col-start-8 lg:col-span-5">
               <div className="flex justify-between">
-                <h1 className="text-xl font-medium text-gray-900">
-                  {mintBook && <div>{mintBook.name}</div>}
+                <h1 className="text-xl font-medium text-gray-200">
+                  <div>{metadata?.name}</div>
                 </h1>
                 {/*<p className="text-xl font-medium rounded-full bg-green-100 text-green-800">
                   ${mintBook.price}
@@ -123,19 +174,16 @@ const MintERC721 = () => {
 
             <div className="mt-8 lg:mt-0 lg:col-start-1 lg:col-span-7 lg:row-start-1 lg:row-span-3">
               <h2 className="sr-only">Images</h2>
-
-              {mintBook && (
-                <img
-                  src={mintBook.image}
-                  className={"lg:col-span-2 lg:row-span-2 rounded-lg"}
-                />
-              )}
+              <img
+                src={metadata?.image}
+                className={"lg:col-span-2 lg:row-span-2 rounded-lg"}
+              />
             </div>
 
             <div className="mt-8 lg:col-span-5">
               <form>
                 <div>
-                  <h2 className="text-md font-medium text-gray-900 mb-5 ">
+                  <h2 className="text-md font-medium text-gray-200 mb-5 ">
                     {highlights && highlights.length} Annotations
                   </h2>
                   {/* My Annotations Meta data */}
@@ -187,18 +235,18 @@ const MintERC721 = () => {
                   {policies.map((policy) => (
                     <div
                       key={policy.name}
-                      className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center"
+                      className="bg-black border border-indigo-600 rounded-lg p-6 text-center"
                     >
                       <dt>
                         <policy.icon
-                          className="mx-auto h-6 w-6 flex-shrink-0 text-gray-400"
+                          className="mx-auto h-6 w-6 flex-shrink-0 text-indigo-600"
                           aria-hidden="true"
                         />
-                        <span className="mt-4 text-sm font-medium text-gray-900">
+                        <span className="mt-4 text-sm font-medium text-gray-200">
                           {policy.name}
                         </span>
                       </dt>
-                      <dd className="mt-1 text-sm text-gray-500">
+                      <dd className="mt-1 text-sm text-indigo-200">
                         {policy.description}
                       </dd>
                     </div>

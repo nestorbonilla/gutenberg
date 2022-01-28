@@ -100,7 +100,7 @@ const MarketingLayout = ({ children }: any) => {
                   y={0}
                   width={4}
                   height={4}
-                  className="text-p-300 text-opacity-30"
+                  className="text-pink-300 text-opacity-30"
                   fill="currentColor"
                 />
               </pattern>
