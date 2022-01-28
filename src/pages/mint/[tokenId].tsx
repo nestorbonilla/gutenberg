@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import Secondary from "../../../artifacts/contracts/SecondaryCollection.sol/SecondaryCollection.json";
 import MarketingLayout from "../../components/marketingLayout";
 import { Highlight } from "../../components/rightSlider";
-import { LIBRARY_CONTRACT, SECONDARY_ADDRESS } from "../../utils/addresses";
+import { SECONDARY_ADDRESS } from "../../utils/addresses";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0" as any);
 const policies = [
@@ -48,22 +48,26 @@ const MintERC721 = () => {
         _tokenURI: url,
       },
     };
-    const newBookId = await Moralis.executeFunction(mintData);
-    const libraryData = {
+    const transaction = await Moralis.executeFunction(mintData);
+    // @ts-ignore
+    const result = await transaction.wait();
+    console.log(result);
+    /*const libraryData = {
       contractAddress: LIBRARY_CONTRACT,
       functionName: "createNonFungibleBook",
-      abi: Secondary.abi,
+      abi: Library.abi,
       params: {
-        nftContract: newBookId,
+        nftContract: LIBRARY_CONTRACT,
         tokenId: newBookId,
         price: 10,
       },
     };
-    await Moralis.executeFunction(libraryData);
+    await Moralis.executeFunction(libraryData);*/
   };
 
   useEffect(() => {
     async function init() {
+      Moralis.enableWeb3();
       if (!tokenId) {
         return;
       }
