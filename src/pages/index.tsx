@@ -7,10 +7,6 @@ import { LIBRARY_CONTRACT } from "../utils/addresses";
 import { abi } from "../../artifacts/contracts/Library.sol/Library.json";
 import { useMoralis } from "react-moralis";
 
-const hexToDec = (hexString: string) => {
-  return parseInt(hexString, 16);
-};
-
 export default function Home() {
   const [bookIds, setBooksIds] = useState<any>([]);
 
@@ -35,7 +31,7 @@ export default function Home() {
     let ids: number[] = [];
 
     parsedData.forEach((item: any) => {
-      ids.push(hexToDec(item[0].hex));
+      ids.push(Number(item[0].hex));
     });
 
     setBooksIds(ids);

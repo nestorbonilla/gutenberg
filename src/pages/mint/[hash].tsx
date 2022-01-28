@@ -30,7 +30,7 @@ const policies = [
 const MintERC721 = () => {
   const [mintBook, setMintBook] = useState<nft_book>(mockBooks[0]);
   const router = useRouter();
-  const { address } = router.query;
+  const { hash } = router.query;
 
   const mint = () => {
     // const { data, error, fetch, isFetching, isLoading } =

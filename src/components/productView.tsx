@@ -29,9 +29,7 @@ type Props = {
   callback: () => {};
 };
 
-const hexToDec = (hexString: string) => {
-  return parseInt(hexString, 16);
-};
+
 
 const ProductView = ({ book_id, erc721, callback }: Props) => {
   console.log("Book id in book -> " + book_id);
@@ -68,6 +66,7 @@ const ProductView = ({ book_id, erc721, callback }: Props) => {
   };
 
   const getLibraryData = async () => {
+
     console.log("Calling");
 
     const libraryCall = {
@@ -84,9 +83,9 @@ const ProductView = ({ book_id, erc721, callback }: Props) => {
     console.log("blob in productView ?=>" + JSON.stringify(blob, null, 3));
 
     setPriceData({
-      price: hexToDec(String(blob[6])),
-      units: hexToDec(String(blob[3])),
-      sales: hexToDec(String(blob[7])),
+      price: Number(blob[5]),
+      units: Number(blob[3]),
+      sales: Number(blob[6]),
     });
   };
 
@@ -268,7 +267,9 @@ const ProductView = ({ book_id, erc721, callback }: Props) => {
                   onClick={callback}
                   className="mt-8 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  {/* {erc721 ? "Mint Annotated NFT" : `Buy ${priceData.sales} / ${priceData?.units} Genesis`} */}
+                  {erc721
+                    ? "Mint Annotated NFT"
+                    : `Buy ${priceData?.sales} / ${priceData?.units} Genesis`}
                 </button>
               </form>
 

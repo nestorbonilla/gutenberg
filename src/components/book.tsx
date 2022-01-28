@@ -20,10 +20,6 @@ type Props = {
   action: Action;
 };
 
-const hexToDec = (hexString: string) => {
-  return parseInt(hexString, 16);
-};
-
 const Book = ({ book_id, action }: Props) => {
   // console.log("Book id in book -> " + book_id);
   const [metadata, setMetadata] = useState<any>();
