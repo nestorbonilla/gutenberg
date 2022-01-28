@@ -7,7 +7,6 @@ import Library from "../../artifacts/contracts/Library.sol/Library.json";
 import { LIBRARY_CONTRACT } from "../utils/addresses";
 
 const Libarary = () => {
-
   const [books, setBooks] = useState<any>([]);
 
   const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
@@ -26,13 +25,13 @@ const Libarary = () => {
 
     console.log("Blob from fetchMyNFTS ?=> " + JSON.stringify(blob, null, 3));
 
-    const data = JSON.stringify(blob);  
+    const data = JSON.stringify(blob);
     const parsedData = JSON.parse(data);
 
     let book_datas: any[] = [];
 
     parsedData.forEach((item: any) => {
-      book_datas.push({ id: Number(item[0].hex), contract: item[1] });
+      book_datas.push({ id: Number(item[2].hex), contract: item[1] });
     });
 
     setBooks(book_datas);
