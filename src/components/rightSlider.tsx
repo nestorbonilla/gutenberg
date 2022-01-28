@@ -1,8 +1,9 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Dialog, Transition } from '@headlessui/react';
-import { XIcon } from '@heroicons/react/outline';
-import { Fragment, useState } from 'react';
-import AllHighlights from './allHighlights';
+import { Dialog, Transition } from "@headlessui/react";
+import { XIcon } from "@heroicons/react/outline";
+import { Fragment, useState } from "react";
+import AllHighlights from "./allHighlights";
+import Link from "next/link";
 
 export interface Toc {
   label: string;
@@ -19,14 +20,15 @@ export interface Highlight {
   chapter: {
     href: string;
     label: string;
-  }
+  };
 }
 
 function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
 interface RightSliderProps {
+  bookId: number;
   marked: boolean;
   toc: Toc[];
   highlights: Highlight[];
@@ -38,19 +40,22 @@ interface RightSliderProps {
 }
 
 export default function RightSlider(props: RightSliderProps) {
-  const [mode, setMode] = useState('my');
-  const tabs = props.marked ?
-    [
-      { name: 'My Marks', mode: 'my' },
-      { name: 'Others\' Marks', mode: 'other' },
-    ] :
-    [
-      { name: 'My Marks', mode: 'my', current: true },
-    ];
+  const [mode, setMode] = useState("my");
+  const tabs = props.marked
+    ? [
+        { name: "My Marks", mode: "my" },
+        { name: "Others' Marks", mode: "other" },
+      ]
+    : [{ name: "My Marks", mode: "my", current: true }];
 
   return (
     <Transition.Root show={props.show} as={Fragment}>
-      <Dialog as="div" className="fixed inset-0 overflow-hidden" onClose={() => props.setShow(false)} style={{ zIndex: 100 }} >
+      <Dialog
+        as="div"
+        className="fixed inset-0 overflow-hidden"
+        onClose={() => props.setShow(false)}
+        style={{ zIndex: 100 }}
+      >
         <div className="absolute inset-0 overflow-hidden">
           <Dialog.Overlay className="absolute inset-0" />
 
@@ -68,7 +73,14 @@ export default function RightSlider(props: RightSliderProps) {
                 <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
                   <div className="p-6">
                     <div className="flex items-start justify-between">
-                      <Dialog.Title className="text-lg font-medium text-gray-900">Notebook</Dialog.Title>
+                      <Dialog.Title className="text-lg font-medium text-gray-900">
+                        Notebook
+                      </Dialog.Title>
+                      <Link replace={true} href={`mint/${props.bookId}`}>
+                        <a className="bg-indigo-600 border border-transparent rounded-md px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          Mint Notes
+                        </a>
+                      </Link>
                       <div className="ml-3 h-7 flex items-center">
                         <button
                           type="button"
@@ -83,16 +95,19 @@ export default function RightSlider(props: RightSliderProps) {
                   </div>
                   <div className="border-b border-gray-200">
                     <div className="px-6">
-                      <nav className="-mb-px flex space-x-6" x-descriptions="Tab component">
+                      <nav
+                        className="-mb-px flex space-x-6"
+                        x-descriptions="Tab component"
+                      >
                         {tabs.map((tab) => (
                           <a
                             key={tab.name}
                             onClick={() => setMode(tab.mode)}
                             className={classNames(
                               tab.mode === mode
-                                ? 'border-indigo-500 text-indigo-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-                              'whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm'
+                                ? "border-indigo-500 text-indigo-600"
+                                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300",
+                              "whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm"
                             )}
                           >
                             {tab.name}
@@ -103,7 +118,9 @@ export default function RightSlider(props: RightSliderProps) {
                   </div>
                   <AllHighlights
                     toc={props.toc}
-                    highlights={mode === "my" ? props.highlights : props.otherHighlights}
+                    highlights={
+                      mode === "my" ? props.highlights : props.otherHighlights
+                    }
                     color="#7986cb"
                     select={props.select}
                     delete={props.delete}
@@ -115,5 +132,5 @@ export default function RightSlider(props: RightSliderProps) {
         </div>
       </Dialog>
     </Transition.Root>
-  )
+  );
 }

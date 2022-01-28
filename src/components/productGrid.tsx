@@ -1,9 +1,8 @@
-import Book from "./book";
-import { Action } from "./book";
+import Book, { Action } from "./book";
 
 type Props = {
   action: Action;
-  books: any[];
+  books: { id: number; contract: string }[];
 };
 
 const ProductGrid = ({books, action }: Props) => {

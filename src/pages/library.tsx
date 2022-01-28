@@ -8,8 +8,7 @@ import { LIBRARY_CONTRACT } from "../utils/addresses";
 
 const Libarary = () => {
 
-  //fetch books from blockchain
-  const [bookIds, setBooksIds] = useState<any>([]);
+  const [books, setBooks] = useState<any>([]);
 
   const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
     useMoralis();
@@ -27,16 +26,16 @@ const Libarary = () => {
 
     console.log("Blob from fetchMyNFTS ?=> " + JSON.stringify(blob, null, 3));
 
-    const data = JSON.stringify(blob);
+    const data = JSON.stringify(blob);  
     const parsedData = JSON.parse(data);
 
-    let ids: number[] = [];
+    let book_datas: any[] = [];
 
     parsedData.forEach((item: any) => {
-      ids.push(Number(item[0].hex));
+      book_datas.push({ id: Number(item[0].hex), contract: item[1] });
     });
 
-    setBooksIds(ids);
+    setBooks(book_datas);
   };
 
   useEffect(() => {
@@ -47,7 +46,7 @@ const Libarary = () => {
 
   return (
     <MarketingLayout>
-      {bookIds ? <ProductGrid books={bookIds} action={Action.read} /> : null}
+      {books ? <ProductGrid books={books} action={Action.read} /> : null}
     </MarketingLayout>
   );
 };

@@ -125,14 +125,14 @@ const MarketingLayout = ({ children }: any) => {
                 <div className="flex items-center justify-between w-full md:w-auto">
                   <Link href="/">
                     <a className="flex flex-row space-x-2">
-                      <span className="sr-only">Gutenburg NFT</span>
+                      <span className="sr-only">Gutenberg NFT</span>
                       <img
                         className="h-8 w-auto sm:h-10"
                         src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                         alt=""
                       />
                       <h1 className="text-3xl font-semibold text-indigo-600">
-                        {"Gutenburg NFT"}
+                        {"Gutenberg NFT"}
                       </h1>
                     </a>
                   </Link>
