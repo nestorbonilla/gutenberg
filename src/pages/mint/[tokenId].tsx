@@ -107,8 +107,6 @@ const MintERC721 = () => {
   };
 
   const getMetaData = async () => {
-    console.log("Calling");
-
     const getMetaData = {
       contractAddress: GENESIS_ADDRESS,
       functionName: "uri",
