@@ -60,17 +60,13 @@ const Reader: NextPage = () => {
   }, [tokenId])
 
   useEffect(() => {
-    // load other highlights
-    if (marked === "1" && tokenMetadata) {
-      new Moralis.Query(MoralisHighlight)
-        .equalTo("address", tokenMetadata.address)
-        .equalTo("bookId", tokenId)
-        .find()
-        .then((results) => {
-          setHighlights(results.map(result => result.toJSON() as unknown as Highlight));
-        });
+    // set other highlights
+    if (marked === "1" && tokenMetadata && renditionRef.current) {
+      setOtherHighlights(tokenMetadata.highlights);
+      tokenMetadata.highlights.forEach((highlight: Highlight) =>
+        renditionRef.current!.annotations.add("highlight", highlight.cfiRange, {}, undefined, "hl", { "fill": "blue", "fill-opacity": "0.3", "mix-blend-mode": "multiply" }));
     }
-  })
+  }, [tokenMetadata, marked, renditionRef.current])
 
   useEffect(() => {
     if (renditionRef.current && tocRef.current) {
@@ -110,8 +106,6 @@ const Reader: NextPage = () => {
       }
     });
     highlights.forEach(highlight => renditionRef.current!.annotations.add("highlight", highlight.cfiRange));
-    otherHighlights.forEach(highlight =>
-      renditionRef.current!.annotations.add("highlight", highlight.cfiRange, {}, undefined , "hl", {"fill": "red", "fill-opacity": "0.5", "mix-blend-mode": "multiply"}));
   }
 
   function selectHighlight(cfiRange: string) {
@@ -145,7 +139,9 @@ const Reader: NextPage = () => {
         <MenuIcon className="h-6 w-6" aria-hidden="true" style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 100 }} />
       </button>}
       <RightSlider
+        marked={marked === "1"}
         highlights={highlights}
+        otherHighlights={otherHighlights || []}
         toc={tocRef.current || []}
         show={showHighlights}
         setShow={setShowHighlights}

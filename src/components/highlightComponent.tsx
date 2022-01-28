@@ -8,6 +8,7 @@ interface HighlightComponentProps {
   highlight: Highlight;
   select: (cfiRange: string) => void;
   delete: (cfiRange: string, id: string) => void;
+  color?: string;
 }
 
 export default function HighlightComponent(props: HighlightComponentProps) {
@@ -38,7 +39,7 @@ export default function HighlightComponent(props: HighlightComponentProps) {
       <div className="flex">
         <button className="relative group py-3 px-5 flex-1" onClick={() => props.select(props.highlight.cfiRange)}>
           <div className="absolute inset-0 group-hover:bg-gray-100" aria-hidden="true" />
-          <div className="flex-1 flex min-w-0 relative border-l-4 border-yellow-200">
+          <div className="flex-1 flex min-w-0 relative border-l-4" style={{ borderColor: props.color || "#fff59d"}}>
             <div className="ml-4">
               <p className="text-sm text-gray-900 text-left">{props.highlight.text}</p>
             </div>

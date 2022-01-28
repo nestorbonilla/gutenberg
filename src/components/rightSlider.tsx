@@ -1,8 +1,8 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
-import { Fragment } from 'react';
-import HighlightComponent from './highlightComponent';
+import { Fragment, useState } from 'react';
+import AllHighlights from './allHighlights';
 
 export interface Toc {
   label: string;
@@ -26,14 +26,11 @@ function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const tabs = [
-  { name: 'My Marks', href: '#', current: true },
-  { name: 'Others\' Marks', href: '#', current: false },
-]
-
 interface RightSliderProps {
+  marked: boolean;
   toc: Toc[];
   highlights: Highlight[];
+  otherHighlights: Highlight[];
   show: boolean;
   setShow: (show: boolean) => void;
   select: (cfiRange: string) => void;
@@ -41,14 +38,15 @@ interface RightSliderProps {
 }
 
 export default function RightSlider(props: RightSliderProps) {
-  const groupedHighlights = props.highlights.reduce((acc, item) => {
-    const chapter = item.chapter.href;
-    if (!acc[chapter]) {
-      acc[chapter] = [];
-    }
-    acc[chapter].push(item);
-    return acc;
-  }, {} as { [chapter: string]: Highlight[] });
+  const [mode, setMode] = useState('my');
+  const tabs = props.marked ?
+    [
+      { name: 'My Marks', mode: 'my' },
+      { name: 'Others\' Marks', mode: 'other' },
+    ] :
+    [
+      { name: 'My Marks', mode: 'my', current: true },
+    ];
 
   return (
     <Transition.Root show={props.show} as={Fragment}>
@@ -89,9 +87,9 @@ export default function RightSlider(props: RightSliderProps) {
                         {tabs.map((tab) => (
                           <a
                             key={tab.name}
-                            href={tab.href}
+                            onClick={() => setMode(tab.mode)}
                             className={classNames(
-                              tab.current
+                              tab.mode === mode
                                 ? 'border-indigo-500 text-indigo-600'
                                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
                               'whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm'
@@ -103,23 +101,13 @@ export default function RightSlider(props: RightSliderProps) {
                       </nav>
                     </div>
                   </div>
-                  <ul role="list" className="divide-y divide-gray-200">
-                    {props.toc
-                      .filter(chapter => groupedHighlights[chapter.href])
-                      .map(chapter => (
-                        <li key={chapter.href}>
-                          <div className="pt-4 pb-2 px-5">{chapter.label}</div>
-                          <ul role="list" className="flex-1 overflow-y-auto">
-                            {groupedHighlights[chapter.href].map((highlight) => <HighlightComponent
-                              key={highlight.objectId}
-                              highlight={highlight}
-                              select={props.select}
-                              delete={props.delete}
-                            />)}
-                          </ul>
-                        </li>
-                      ))}
-                  </ul>
+                  <AllHighlights
+                    toc={props.toc}
+                    highlights={mode === "my" ? props.highlights : props.otherHighlights}
+                    color="#7986cb"
+                    select={props.select}
+                    delete={props.delete}
+                  />
                 </div>
               </div>
             </Transition.Child>
