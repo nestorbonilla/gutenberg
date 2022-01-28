@@ -43,7 +43,6 @@ const ProductView = ({ erc721, parentCall }: Props) => {
   const buy = async () => {
     console.log("FUCK");
 
-  
     const libraryCall = {
       contractAddress: LIBRARY_CONTRACT,
       functionName: "createLibrarySale",
@@ -55,12 +54,11 @@ const ProductView = ({ erc721, parentCall }: Props) => {
       },
     };
 
-      console.log("THe Call => " + JSON.stringify(libraryCall));
+    console.log("THe Call => " + JSON.stringify(libraryCall));
 
-      const blob: any = await Moralis.executeFunction(libraryCall);
+    const blob: any = await Moralis.executeFunction(libraryCall);
 
-      console.log("Blob from mint ?=> " + JSON.stringify(blob, null, 3));
-
+    console.log("Blob from mint ?=> " + JSON.stringify(blob, null, 3));
   };
 
   const getMetaData = async () => {
@@ -105,10 +103,14 @@ const ProductView = ({ erc721, parentCall }: Props) => {
 
     console.log("blob in productView ?=>" + JSON.stringify(blob, null, 3));
 
+    let data = JSON.stringify(blob);
+    let parsedData = JSON.parse(data);
+    console.log(parsedData);
+
     setPriceData({
-      price: Number(blob[5]),
+      price: Number(blob[6]),
       units: Number(blob[3]),
-      sales: Number(blob[6]),
+      sales: Number(blob[7]),
     });
   };
 
@@ -292,7 +294,9 @@ const ProductView = ({ erc721, parentCall }: Props) => {
                 >
                   {erc721
                     ? "Mint Annotated NFT"
-                    : `Buy ${priceData?.sales} / ${priceData?.units} Genesis`}
+                    : `Buy ${priceData?.sales + 1} / ${
+                        priceData?.units
+                      } Genesis`}
                 </a>
               </form>
 
