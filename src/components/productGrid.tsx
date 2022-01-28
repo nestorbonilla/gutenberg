@@ -1,10 +1,4 @@
-import { useEffect, useState } from "react";
-import Book from "./book";
-import { nft_book } from "../types/mockMetadata";
-import { Action } from "./book";
-import { LIBRARY_CONTRACT } from '../utils/addresses';
-import { abi } from "../../artifacts/contracts/Library.sol/Library.json";
-import { useMoralis } from 'react-moralis';
+import Book, { Action } from "./book";
 
 type Props = {
   action: Action;

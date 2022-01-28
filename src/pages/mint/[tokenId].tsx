@@ -31,15 +31,12 @@ const policies = [
 const MintERC721 = () => {
   const router = useRouter();
   const { tokenId } = router.query;
-  const [mintBook, setMintBook] = useState<any>();
   const [address, setAddress] = useState<string>();
   const [metadata, setMetadata] = useState<any>();
   const [priceData, setPriceData] = useState<any>();
+  const [minting, setMinting] = useState(false);
 
-  // const { data, error, isLoading } = useMoralisQuery("GameScore");
-
-  const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } =
-    useMoralis();
+  const { Moralis, isInitialized, isAuthenticated, isWeb3Enabled } = useMoralis();
 
   const [highlights, setHighlights] = useState<Highlight[]>();
   const MoralisHighlight = Moralis.Object.extend("Highlight");
@@ -120,8 +117,6 @@ const MintERC721 = () => {
   };
 
   const getLibraryData = async () => {
-    // console.log("Calling");
-
     const libraryCall = {
       contractAddress: LIBRARY_CONTRACT,
       functionName: "fetchBook",
@@ -141,7 +136,6 @@ const MintERC721 = () => {
   };
 
   const makeCalls = async () => {
-    // console.log("Getting -> " + book_id);
     await Moralis.enableWeb3();
     getAnnotations();
     getMetaData();
