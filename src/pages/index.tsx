@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import ProdcutGrid from "../components/productGrid";
-import MarketingLayout from "../components/marketingLayout";
-import LandingHeader from "../components/landingHeader";
-import { Action } from "../components/book";
-import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../utils/addresses";
-import { abi } from "../../artifacts/contracts/Library.sol/Library.json";
+import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
+import { abi } from "../../artifacts/contracts/Library.sol/Library.json";
+import { Action } from "../components/book";
+import LandingHeader from "../components/landingHeader";
+import MarketingLayout from "../components/marketingLayout";
+import ProductGrid from "../components/productGrid";
+import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../utils/addresses";
 
 export default function Home() {
   const [books, setBooks] = useState<any>([]);
@@ -37,7 +37,7 @@ export default function Home() {
       }
     });
 
-    // console.log("book_datas => " + JSON.stringify(book_datas, null, 3));
+    console.log("book_datas => " + JSON.stringify(book_datas, null, 3));
 
     setBooks(book_datas);
   };
@@ -51,7 +51,9 @@ export default function Home() {
   return (
     <MarketingLayout>
       <LandingHeader />
-      {books ? <ProdcutGrid books={books} action={Action.buyERC1155} /> : null}
+      {books ? (
+        <ProductGrid books={books} action={Action.buyERC1155} />
+      ) : null}
     </MarketingLayout>
   );
 }

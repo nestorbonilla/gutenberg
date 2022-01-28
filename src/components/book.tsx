@@ -1,17 +1,15 @@
-import { useState } from "react";
+import axios from "axios";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
 import Genesis from "../../artifacts/contracts/GenesisCollection.sol/GenesisCollection.json";
 import Library from "../../artifacts/contracts/Library.sol/Library.json";
 import Secondary from "../../artifacts/contracts/SecondaryCollection.sol/SecondaryCollection.json";
-
-import axios from "axios";
 import {
   GENESIS_ADDRESS,
-  LIBRARY_CONTRACT,
-  SECONDARY_ADDRESS,
+  LIBRARY_CONTRACT
 } from "../utils/addresses";
+
 
 export enum Action {
   mintERC721 = "mintER721",
@@ -26,7 +24,6 @@ type Props = {
 };
 
 const Book = ({ book, action }: Props) => {
-  // console.log("Book id in book -> " + book_id);
   const [metadata, setMetadata] = useState<any>();
   const [priceData, setPriceData] = useState<any>();
 
@@ -47,12 +44,9 @@ const Book = ({ book, action }: Props) => {
     useMoralis();
 
   const getMetaData = async () => {
-    console.log("Calling");
-
     const getMetaData = {
       contractAddress: book.contract,
       functionName: book.contract === GENESIS_ADDRESS ? "uri" : "tokenURI",
-      // abi: Genesis.abi,
       abi: book.contract === GENESIS_ADDRESS ? Genesis.abi : Secondary.abi,
       params:
         book.contract === GENESIS_ADDRESS
@@ -60,21 +54,19 @@ const Book = ({ book, action }: Props) => {
           : { tokenId: book.id },
     };
 
-    // console.log("GetMetaDataArgBlob => " + JSON.stringify(getMetaData));
-
     const pinataLink = await Moralis.executeFunction(getMetaData);
     console.log("Pinata link -> " + pinataLink);
 
     let { data } = await axios.get(String(pinataLink));
 
-    // console.log("Data from Link -> " + JSON.stringify(data, null, 3));
+    if (book.contract !== GENESIS_ADDRESS && data.name) {
+      console.log("Data from Link -> " + JSON.stringify(data, null, 3));
+    }
 
     setMetadata(data);
   };
 
   const getLibraryData = async () => {
-    // console.log("Calling");
-
     const libraryCall = {
       contractAddress: LIBRARY_CONTRACT,
       functionName: "fetchBook",
@@ -85,17 +77,10 @@ const Book = ({ book, action }: Props) => {
     };
 
     const blob = await Moralis.executeFunction(libraryCall);
-
-    // console.log(
-    //   "executeFunction respone from library ?=>" + JSON.stringify(blob, null, 3)
-    // );
-
     setPriceData(blob);
   };
 
   const makeCalls = async () => {
-    console.log("Getting -> " + JSON.stringify(book, null, 3));
-
     getMetaData();
     getLibraryData();
   };
