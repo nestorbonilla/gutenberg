@@ -6,8 +6,9 @@ import Genesis from "../../artifacts/contracts/GenesisCollection.sol/GenesisColl
 import Library from "../../artifacts/contracts/Library.sol/Library.json";
 import Secondary from "../../artifacts/contracts/SecondaryCollection.sol/SecondaryCollection.json";
 import {
+  LIBRARY_CONTRACT,
   GENESIS_ADDRESS,
-  LIBRARY_CONTRACT
+  SECONDARY_ADDRESS
 } from "../utils/addresses";
 
 

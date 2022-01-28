@@ -5,7 +5,7 @@ import { Action } from "../components/book";
 import LandingHeader from "../components/landingHeader";
 import MarketingLayout from "../components/marketingLayout";
 import ProductGrid from "../components/productGrid";
-import { GENESIS_ADDRESS, LIBRARY_CONTRACT } from "../utils/addresses";
+import { GENESIS_ADDRESS, SECONDARY_ADDRESS, LIBRARY_CONTRACT } from "../utils/addresses";
 
 export default function Home() {
   const [books, setBooks] = useState<any>([]);
@@ -33,6 +33,11 @@ export default function Home() {
     parsedData.forEach((item: any) => {
       //only show genesis erc721 on home page for now.
       if (item[1] === GENESIS_ADDRESS) {
+        book_datas.push({ id: Number(item[2].hex), contract: item[1] });
+      }
+
+      // ERC721
+      if (item[1] === SECONDARY_ADDRESS) {
         book_datas.push({ id: Number(item[2].hex), contract: item[1] });
       }
     });
