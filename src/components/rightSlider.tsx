@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { Fragment, useState } from "react";
@@ -76,7 +75,7 @@ export default function RightSlider(props: RightSliderProps) {
                       <Dialog.Title className="text-lg font-medium text-gray-900">
                         Notebook
                       </Dialog.Title>
-                      <Link replace={true} href={`mint/${props.bookId}`}>
+                      <Link href={`/mint/${props.bookId}`}>
                         <a className="bg-indigo-600 border border-transparent rounded-md px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                           Mint Notes
                         </a>
