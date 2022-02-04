@@ -33,12 +33,12 @@ export default function Home() {
     parsedData.forEach((item: any) => {
       //only show genesis erc721 on home page for now.
       if (item[1] === GENESIS_ADDRESS) {
-        book_datas.push({ id: Number(item[2].hex), contract: item[1] });
+        book_datas.push({ id: Number(item[2].hex), contract: item[1], book_id: Number(item[0].hex) });
       }
 
       // ERC721 <- this is funny nestor
       if (item[1] === SECONDARY_ADDRESS) {
-        book_datas.push({ id: Number(item[2].hex), contract: item[1] });
+        book_datas.push({ id: Number(item[2].hex), contract: item[1], book_id: Number(item[0].hex) });
       }
     });
 

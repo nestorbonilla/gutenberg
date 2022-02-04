@@ -41,10 +41,10 @@ const Libarary = () => {
     let book_datas: any[] = [];
 
     parsedData.forEach((item: any) => {
-      book_datas.push({ id: Number(item[2].hex), contract: item[1] });
+      book_datas.push({ id: Number(item[2].hex), contract: item[1], book_id: Number(item[0].hex) });
     });
     parsedData2.forEach((item: any) => {
-      book_datas.push({ id: Number(item[2].hex), contract: item[1] });
+      book_datas.push({ id: Number(item[2].hex), contract: item[1], book_id: Number(item[0].hex)  });
     });
 
     setBooks(book_datas);

@@ -19,7 +19,7 @@ export enum Action {
 }
 
 type Props = {
-  book: { id: number; contract: string };
+  book: { id: number; contract: string, book_id?: number };
   genesis_action: string;
   secondary_action: string; 
   params: boolean; 
@@ -61,9 +61,9 @@ const Book = ({ book, genesis_action, secondary_action, params = false }: Props)
 
     let { data } = await axios.get(String(pinataLink));
 
-    if (book.contract !== GENESIS_ADDRESS && data.name) {
-      console.log("Data from Link -> " + JSON.stringify(data, null, 3));
-    }
+    // if (book.contract !== GENESIS_ADDRESS && data.name) {
+    //   console.log("Data from Link -> " + JSON.stringify(data, null, 3));
+    // }
 
     setMetadata(data);
   };
@@ -96,7 +96,7 @@ const Book = ({ book, genesis_action, secondary_action, params = false }: Props)
   return (
     <div key={metadata?.ipfs_url} className="group relative">
       <div
-        className={`w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none ${
+        className={`w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-non ${
           book.contract === SECONDARY_ADDRESS
             ? "border-2 border-yellow-200"
             : ""
@@ -114,7 +114,7 @@ const Book = ({ book, genesis_action, secondary_action, params = false }: Props)
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-200">
-            <Link href={`${book.contract === GENESIS_ADDRESS ? genesis_action : secondary_action}/${book.id}${(params && book.contract === SECONDARY_ADDRESS) ? "?marked=1" : ""}`}>
+            <Link href={`${book.contract === GENESIS_ADDRESS ? genesis_action : secondary_action}/${book.book_id}${(params && book.contract === SECONDARY_ADDRESS) ? "?marked=1" : ""}`}>
               <a>
                 <span aria-hidden="true" className="absolute inset-0" />
                 {metadata?.name}

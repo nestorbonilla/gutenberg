@@ -65,6 +65,9 @@ const MintERC721 = () => {
         _tokenURI: url,
       },
     };
+
+    console.log("Mint data: ", mintData);
+
     const transaction = await Moralis.executeFunction(mintData);
     // @ts-ignore
     const result = await transaction.wait();
@@ -165,7 +168,7 @@ const MintERC721 = () => {
                 <h1 className="text-xl font-medium text-gray-200">
                   <div>{metadata?.name}</div>
                 </h1>
-                <p className="text-xl font-medium rounded-full bg-green-100 text-green-800">
+                <p className="text-xl font-medium rounded-full px-5 bg-green-100 text-green-800">
                   {`$${priceData?.price}`}
                 </p>
               </div>

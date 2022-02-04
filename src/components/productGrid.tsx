@@ -4,7 +4,7 @@ import Book, { Action } from "./book";
 type Props = {
   genesis_action: string;
   secondary_action: string;
-  books: { id: number; contract: string }[];
+  books: { id: number; contract: string; book_id?: number }[];
   params?: boolean;
 };
 
